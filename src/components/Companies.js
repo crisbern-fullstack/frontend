@@ -20,9 +20,8 @@ const Companies = () => {
 
     if (user) {
       fetchCompanies();
-      console.log(companies);
     }
-  }, []);
+  }, [user]);
 
   return (
     <div className="content-wrapper">
@@ -47,42 +46,56 @@ const Companies = () => {
                   <h3 className="card-title">Companies</h3>
                 </div>
                 {/* /.card-header */}
-                <div className="card-body">
-                  <table
-                    id="example2"
-                    className="table table-bordered table-hover"
-                  >
-                    <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Website</th>
-                        <th>Logo</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {companies &&
-                        companies.map((company) => {
-                          <tr>
-                            <td>{company._id}</td>
-                            <td>{company.name}</td>
-                            <td>{company.email}</td>
-                            <td>{company.website}</td>
-                            <td>X</td>
-                          </tr>;
-                        })}
-                    </tbody>
-                    <tfoot>
-                      <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Website</th>
-                        <th>Logo</th>
-                      </tr>
-                    </tfoot>
-                  </table>
+                <div className="card-body ">
+                  <div className="table-responsive">
+                    <table
+                      id="example2"
+                      className="table table-bordered table-hover"
+                    >
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Website</th>
+                          <th>Logo</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {companies &&
+                          companies.map((company) => (
+                            <tr>
+                              <td>{company._id}</td>
+                              <td>{company.name}</td>
+                              <td>{company.email}</td>
+                              <td>{company.website}</td>
+                              <td className="d-flex align-items-center justify-content-center">
+                                <img
+                                  src={company.logo}
+                                  style={{
+                                    maxWidth: "100px",
+                                    maxHeight: "100px",
+                                  }}
+                                  alt={`${company.name} logo`}
+                                />
+                              </td>
+                              <td></td>
+                            </tr>
+                          ))}
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                          <th>ID</th>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Website</th>
+                          <th>Logo</th>
+                          <th>Actions</th>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
                 </div>
                 {/* /.card-body */}
               </div>
