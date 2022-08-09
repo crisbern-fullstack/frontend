@@ -11,3 +11,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.delete-overlay{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  z-index: 100;
+  opacity: 60%;
+}

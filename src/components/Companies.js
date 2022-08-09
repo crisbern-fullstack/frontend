@@ -1,9 +1,25 @@
 import { useEffect, useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { Link } from "react-router-dom";
 
 const Companies = () => {
   const { user } = useAuthContext();
   const [companies, setCompanies] = useState([]);
+
+  const handleDelete = async (_id) => {
+    const response = await fetch(`/api/delete-company/${_id}`, {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${user.token}` },
+    });
+
+    const deleted_company = await response.json();
+
+    if (response.ok) {
+      setCompanies(
+        companies.filter((company) => company._id !== deleted_company._id)
+      );
+    }
+  };
 
   useEffect(() => {
     const fetchCompanies = async () => {
@@ -30,20 +46,31 @@ const Companies = () => {
         <div className="container-fluid">
           <div className="row mb-2">
             <div className="col-sm-6">
-              <h1>DataTables</h1>
+              <h1>Companies</h1>
             </div>
           </div>
         </div>
         {/* /.container-fluid */}
       </section>
       {/* Main content */}
+      <section className="content" style={{ marginBottom: "20px" }}>
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col col-5">
+              <Link to="/companies/add-company" className="btn btn-success">
+                <i class="bi bi-plus-circle-fill"></i>Add New Company
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
       <section className="content">
         <div className="container-fluid">
           <div className="row">
             <div className="col-12">
               <div className="card">
                 <div className="card-header">
-                  <h3 className="card-title">Companies</h3>
+                  <h3 className="card-title">Company Details</h3>
                 </div>
                 {/* /.card-header */}
                 <div className="card-body ">
@@ -65,7 +92,7 @@ const Companies = () => {
                       <tbody>
                         {companies &&
                           companies.map((company) => (
-                            <tr>
+                            <tr key={company._id}>
                               <td>{company._id}</td>
                               <td>{company.name}</td>
                               <td>{company.email}</td>
@@ -80,7 +107,19 @@ const Companies = () => {
                                   alt={`${company.name} logo`}
                                 />
                               </td>
-                              <td></td>
+                              <td className="">
+                                <button className="btn btn-block btn-warning">
+                                  Edit
+                                </button>
+                                <button
+                                  onClick={(e) => {
+                                    handleDelete(company._id);
+                                  }}
+                                  className="btn btn-block btn-danger"
+                                >
+                                  Delete
+                                </button>
+                              </td>
                             </tr>
                           ))}
                       </tbody>
@@ -113,4 +152,3 @@ const Companies = () => {
 };
 
 export default Companies;
-//

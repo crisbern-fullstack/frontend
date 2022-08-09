@@ -1,7 +1,5 @@
 import { useAuthContext } from "../hooks/useAuthContext";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
-import { AuthAction } from "../contexts/AuthContext";
 
 const Sidebar = () => {
   const { user } = useAuthContext();
