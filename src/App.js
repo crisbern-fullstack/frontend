@@ -6,6 +6,7 @@ import Sidebar from "./components/Sidebar";
 import Companies from "./components/Companies";
 import Footer from "./components/Footer";
 import AddCompany from "./components/AddCompany";
+import CompanyDetails from "./components/CompanyDetails";
 import { useAuthContext } from "./hooks/useAuthContext";
 
 function App() {
@@ -35,6 +36,10 @@ function App() {
           <Route
             path="/companies/add-company"
             element={user ? <AddCompany /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/companies/:id"
+            element={user ? <CompanyDetails /> : <Navigate to="/login" />}
           />
         </Routes>
         <Footer />
