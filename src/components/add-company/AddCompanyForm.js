@@ -32,7 +32,7 @@ const AddCompanyForm = () => {
     const new_company = await response.json();
 
     if (response.ok) {
-      naviagte("/companies");
+      naviagte("/companies/" + new_company._id);
     }
 
     if (!response.ok) {

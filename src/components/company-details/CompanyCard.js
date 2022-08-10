@@ -4,7 +4,14 @@ const CompanyCard = ({ isLoading, props_company }) => {
       <div className="card-header">
         <div className="card-title">
           {isLoading && "Loading..."}
-          {!isLoading && <h2>{props_company.name}</h2>}
+          {!isLoading && (
+            <div>
+              <h2>{props_company.name}</h2>
+              <h6 style={{ color: "#00008B" }}>
+                {"Company ID:" + props_company._id}
+              </h6>
+            </div>
+          )}
         </div>
       </div>
       {/* /.card-header */}

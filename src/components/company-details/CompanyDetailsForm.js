@@ -3,13 +3,6 @@ import { useCompanyContext } from "../../hooks/useCompanyContext";
 
 const CompanyDetailsForm = ({ isLoading, props_company, id, user }) => {
   const { dispatch } = useCompanyContext();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [website, setWebsite] = useState("");
-  const [logo, setLogo] = useState({
-    file: "",
-    name: "",
-  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,6 +32,14 @@ const CompanyDetailsForm = ({ isLoading, props_company, id, user }) => {
     }
   };
 
+  const [name, setName] = useState(props_company.name);
+  const [email, setEmail] = useState(props_company.email);
+  const [website, setWebsite] = useState(props_company.website);
+  const [logo, setLogo] = useState({
+    file: props_company.logo,
+    name: "",
+  });
+
   return (
     <form encType="multipart/form-data" onSubmit={handleSubmit}>
       <div className="card-body">
@@ -56,7 +57,7 @@ const CompanyDetailsForm = ({ isLoading, props_company, id, user }) => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="company-email">Email Address</label>
+          <label htmlFor="company-email">Email</label>
           <input
             type="email"
             className="form-control"
