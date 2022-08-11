@@ -13,6 +13,7 @@ const AddEmployeeForm = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [company, setCompany] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
 
@@ -32,6 +33,7 @@ const AddEmployeeForm = () => {
       last_name: lastName,
       email: email,
       company: company,
+      phone: phone,
       is_admin: isAdmin,
     };
 
@@ -59,7 +61,7 @@ const AddEmployeeForm = () => {
           <input
             type="text"
             className="form-control"
-            placeholder="Name"
+            placeholder="First Name"
             id="first-name"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
@@ -70,21 +72,35 @@ const AddEmployeeForm = () => {
           <input
             type="text"
             className="form-control"
-            placeholder="Name"
+            placeholder="Last Name"
             id="last-name"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
           />
         </div>
         <div className="form-group">
-          <label htmlFor="company-email">Email Address</label>
+          <label htmlFor="email">Email Address</label>
           <input
             type="email"
             className="form-control"
-            id="company-email"
+            id="email"
             placeholder="Enter email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="phone">
+            Phone Number <i>(e.g. 09123456789)</i>
+          </label>
+          <input
+            type="tel"
+            className="form-control"
+            id="phone"
+            placeholder="Enter Phone Number"
+            pattern="[0-9]{11}"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
           />
         </div>
         <div className="form-group">

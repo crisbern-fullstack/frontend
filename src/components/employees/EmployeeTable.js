@@ -53,6 +53,7 @@ const EmployeeTable = () => {
           <th>First Name</th>
           <th>Last Name</th>
           <th>Email</th>
+          <th>Number</th>
           <th>Password</th>
           <th>Company</th>
           <th>Actions</th>
@@ -68,6 +69,7 @@ const EmployeeTable = () => {
               <td> {employee.first_name}</td>
               <td>{employee.last_name}</td>
               <td>{employee.email}</td>
+              <td>{employee.phone}</td>
               <td style={{ wordWrap: "break-word", maxWidth: "300px" }}>
                 {employee.password}
               </td>
@@ -95,6 +97,7 @@ const EmployeeTable = () => {
           <th>First Name</th>
           <th>Last Name</th>
           <th>Email</th>
+          <th>Number</th>
           <th>Password</th>
           <th>Company</th>
           <th>Actions</th>
