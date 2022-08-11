@@ -1,9 +1,15 @@
 import { Link } from "react-router-dom";
 import CompanyTable from "./companies/CompanyTable";
-import { useCompanyContext } from "../hooks/useCompanyContext";
 import { useEffect } from "react";
+import useFetchCompanies from "../hooks/useFetchCompanies";
 
 const Companies = () => {
+  const { fetchCompanies } = useFetchCompanies();
+
+  useEffect(() => {
+    fetchCompanies();
+  }, []);
+
   return (
     <div className="content-wrapper">
       {/* Content Header (Page header) */}
@@ -22,7 +28,7 @@ const Companies = () => {
         <div className="container-fluid">
           <div className="row">
             <div className="col col-5">
-              <Link to="/companies/add-company" className="btn btn-success">
+              <Link to="add-company" className="btn btn-success">
                 <i className="bi bi-plus-circle-fill"></i>Add New Company
               </Link>
             </div>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useNavigate } from "react-router-dom";
+import { useCompaniesContext } from "../../hooks/useCompaniesContext";
 
 const AddCompanyForm = () => {
   const [name, setName] = useState("");
@@ -12,6 +13,7 @@ const AddCompanyForm = () => {
   });
   const { user } = useAuthContext();
   const naviagte = useNavigate();
+  const { dispatch } = useCompaniesContext();
 
   const handleSumbit = async (e) => {
     e.preventDefault();
@@ -32,6 +34,7 @@ const AddCompanyForm = () => {
     const new_company = await response.json();
 
     if (response.ok) {
+      dispatch({ type: "ADD_COMPANIES", payload: new_company });
       naviagte("/companies/" + new_company._id);
     }
 

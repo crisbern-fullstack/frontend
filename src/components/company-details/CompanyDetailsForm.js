@@ -1,8 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCompanyContext } from "../../hooks/useCompanyContext";
 
-const CompanyDetailsForm = ({ isLoading, props_company, id, user }) => {
-  const { dispatch } = useCompanyContext();
+const CompanyDetailsForm = ({ isLoading, id, user }) => {
+  const { dispatch, company } = useCompanyContext();
+  const [name, setName] = useState();
+  const [email, setEmail] = useState();
+  const [website, setWebsite] = useState();
+  const [logo, setLogo] = useState({
+    file: "",
+    name: "",
+  });
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,8 +31,9 @@ const CompanyDetailsForm = ({ isLoading, props_company, id, user }) => {
     const updated_company = await response.json();
 
     if (response.ok) {
-      console.log(updated_company);
       dispatch({ type: "SET_COMPANY", payload: updated_company });
+      setIsSuccess(true);
+      setTimeout(() => setIsSuccess(false), 2000);
     }
 
     if (!response.ok) {
@@ -32,13 +41,12 @@ const CompanyDetailsForm = ({ isLoading, props_company, id, user }) => {
     }
   };
 
-  const [name, setName] = useState(props_company.name);
-  const [email, setEmail] = useState(props_company.email);
-  const [website, setWebsite] = useState(props_company.website);
-  const [logo, setLogo] = useState({
-    file: props_company.logo,
-    name: "",
-  });
+  useEffect(() => {
+    setName(company.name);
+    setEmail(company.email);
+    setWebsite(company.website);
+    setLogo({ name: company.logo });
+  }, [company]);
 
   return (
     <form encType="multipart/form-data" onSubmit={handleSubmit}>
@@ -95,11 +103,8 @@ const CompanyDetailsForm = ({ isLoading, props_company, id, user }) => {
                 }}
               />
               <label className="custom-file-label" htmlFor="company-logo">
-                {logo.name.replace("C:\\fakepath\\", "")}
+                {logo.name && logo.name.replace("C:\\fakepath\\", "")}
               </label>
-            </div>
-            <div className="input-group-append">
-              <span className="input-group-text">Upload</span>
             </div>
           </div>
         </div>
@@ -109,6 +114,11 @@ const CompanyDetailsForm = ({ isLoading, props_company, id, user }) => {
         <button type="submit" className="btn btn-primary">
           Save Edits
         </button>
+        {isSuccess && (
+          <h5 style={{ color: "green", marginTop: "10px" }}>
+            Changes are successfuly saved!
+          </h5>
+        )}
       </div>
     </form>
   );

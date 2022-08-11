@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { Link } from "react-router-dom";
+import { useCompaniesContext } from "../../hooks/useCompaniesContext";
 
 const CompanyTable = () => {
   const { user } = useAuthContext();
-  const [companies, setCompanies] = useState([]);
+  const { companies, dispatch } = useCompaniesContext();
 
   const handleDelete = async (_id) => {
     const response = await fetch(`/api/delete-company/${_id}`, {
@@ -15,29 +16,9 @@ const CompanyTable = () => {
     const deleted_company = await response.json();
 
     if (response.ok) {
-      setCompanies(
-        companies.filter((company) => company._id !== deleted_company._id)
-      );
+      dispatch({ type: "DELETE_COMPANIES", payload: deleted_company });
     }
   };
-
-  useEffect(() => {
-    const fetchCompanies = async () => {
-      const response = await fetch("api/all-companies", {
-        headers: { Authorization: `Bearer ${user.token}` },
-      });
-
-      const fetchedCompanies = await response.json();
-
-      if (response.ok) {
-        setCompanies(fetchedCompanies);
-      }
-    };
-
-    if (user) {
-      fetchCompanies();
-    }
-  }, [user]);
 
   return (
     <table id="example2" className="table table-bordered table-hover">

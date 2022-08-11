@@ -56,7 +56,7 @@ const Sidebar = () => {
             </li>
             {/* Companies */}
             <li className="nav-item">
-              <Link to="/companies" className="nav-link">
+              <Link to="companies" className="nav-link">
                 <i className="nav-icon fas fa-tachometer-alt" />
                 <p>Companies</p>
               </Link>
@@ -79,7 +79,7 @@ const Sidebar = () => {
               </ul>
             </li>
             <li className="nav-item">
-              <Link to="/companies" className="nav-link">
+              <Link to="companies" className="nav-link">
                 <i className="nav-icon fas fa-tachometer-alt" />
                 <p>Employees</p>
               </Link>

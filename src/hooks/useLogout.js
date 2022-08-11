@@ -13,7 +13,7 @@ export const useLogout = () => {
 
     if (!user) {
       dispatch({ type: AuthAction.LOGOUT });
-      navigate("/login");
+      navigate("login");
     }
   };
 

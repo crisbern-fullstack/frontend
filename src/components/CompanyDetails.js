@@ -19,6 +19,11 @@ const CompanyDetails = () => {
     }
   }, []);
 
+  if (company === undefined) {
+    console.log("GRRRRRr");
+    return <h1>Loading...</h1>;
+  }
+
   return (
     <div>
       <div className="content-wrapper">
