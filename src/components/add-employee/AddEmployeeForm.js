@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useCompaniesContext } from "../../hooks/useCompaniesContext";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import { useEmployeesContext } from "../../hooks/useEmployeesContext";
 import useFetchCompanies from "../../hooks/useFetchCompanies";
 
 const AddEmployeeForm = () => {
   const { companies } = useCompaniesContext();
+  const { dispatch } = useEmployeesContext();
   const { fetchCompanies } = useFetchCompanies();
   const { user } = useAuthContext();
 
@@ -16,7 +18,6 @@ const AddEmployeeForm = () => {
 
   useEffect(() => {
     fetchCompanies();
-    console.log(companies);
   }, []);
 
   const handleCheck = () => {
@@ -26,20 +27,11 @@ const AddEmployeeForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let company_name = await companies.find(
-      (fetched_company) => fetched_company._id === company
-    );
-
-    console.log(company);
-
     const data = {
       first_name: firstName,
       last_name: lastName,
       email: email,
-      company: {
-        name: company_name.name,
-        id: company,
-      },
+      company: company,
       is_admin: isAdmin,
     };
 
@@ -54,7 +46,9 @@ const AddEmployeeForm = () => {
 
     const new_employee = await response.json();
 
-    console.log(new_employee);
+    if (response.ok) {
+      dispatch({ type: "ADD_EMPLOYEES", payload: new_employee });
+    }
   };
 
   return (

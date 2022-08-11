@@ -3,7 +3,7 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 import { useCompaniesContext } from "../../hooks/useCompaniesContext";
 import useFetchCompanies from "../../hooks/useFetchCompanies";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const EmployeeTable = () => {
   const { employees, dispatch } = useEmployeesContext();
@@ -27,8 +27,23 @@ const EmployeeTable = () => {
 
   useEffect(() => {
     fetchCompanies();
-    console.log(companies);
   }, []);
+
+  const companyName = (company_id) => {
+    if (!companies) {
+      return;
+    }
+
+    let fetched_company = companies.find(
+      (company) => company_id === company._id
+    );
+
+    if (fetched_company !== undefined) {
+      return fetched_company.name;
+    } else {
+      return "";
+    }
+  };
 
   return (
     <table id="example2" className="table table-bordered table-hover">
@@ -46,7 +61,7 @@ const EmployeeTable = () => {
       <tbody>
         {employees &&
           employees.map((employee) => (
-            <tr key={employee.id}>
+            <tr key={employee._id}>
               <td style={{ wordWrap: "break-word", maxWidth: "200px" }}>
                 {employee._id}
               </td>
@@ -56,7 +71,10 @@ const EmployeeTable = () => {
               <td style={{ wordWrap: "break-word", maxWidth: "300px" }}>
                 {employee.password}
               </td>
-              <td>{employee.company.name}</td>
+              <td>
+                {employee.company !== undefined &&
+                  companyName(employee.company)}
+              </td>
               <td className="">
                 <Link to="" className="btn btn-block btn-warning">
                   Edit
