@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useAuthContext } from "./useAuthContext";
+import { useEmployeesContext } from "./useEmployeesContext";
 
 export const useFetchEmployees = () => {
   const { user } = useAuthContext();
+  const { dispatch } = useEmployeesContext();
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -18,8 +20,7 @@ export const useFetchEmployees = () => {
 
     if (response.ok) {
       setIsLoading(false);
-      console.log("details loaded");
-      console.log(employees);
+      dispatch({ type: "SET_EMPLOYEES", payload: employees });
       return;
     }
 

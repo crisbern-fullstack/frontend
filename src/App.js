@@ -5,6 +5,7 @@ import Companies from "./components/Companies";
 import AddCompany from "./components/AddCompany";
 import CompanyDetails from "./components/CompanyDetails";
 import Employees from "./components/Employees";
+import AddEmployee from "./components/AddEmployee";
 import { useAuthContext } from "./hooks/useAuthContext";
 
 function App() {
@@ -30,6 +31,10 @@ function App() {
           <Route
             path="employees"
             element={user ? <Employees /> : <Navigate to="login" />}
+          />
+          <Route
+            path="employees/add-employee"
+            element={user ? <AddEmployee /> : <Navigate to="login" />}
           />
         </Route>
       </Routes>

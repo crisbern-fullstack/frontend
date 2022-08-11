@@ -1,6 +1,6 @@
-import AddCompanyForm from "./add-company/AddCompanyForm";
+import AddEmployeeForm from "./add-employee/AddEmployeeForm";
 
-const AddCompany = () => {
+const AddEmployee = () => {
   return (
     <div className="content-wrapper">
       {/* Content Header (Page header) */}
@@ -8,7 +8,7 @@ const AddCompany = () => {
         <div className="container-fluid">
           <div className="row mb-2">
             <div className="col-sm-6">
-              <h1>Add New Company</h1>
+              <h1>Add New Employee</h1>
             </div>
           </div>
         </div>
@@ -23,11 +23,11 @@ const AddCompany = () => {
               {/* general form elements */}
               <div className="card card-primary">
                 <div className="card-header">
-                  <h3 className="card-title">Company Details</h3>
+                  <h3 className="card-title">Employee Details</h3>
                 </div>
                 {/* /.card-header */}
                 {/* form start */}
-                <AddCompanyForm />
+                <AddEmployeeForm />
               </div>
               {/* /.card */}
             </div>
@@ -42,4 +42,4 @@ const AddCompany = () => {
   );
 };
 
-export default AddCompany;
+export default AddEmployee;
