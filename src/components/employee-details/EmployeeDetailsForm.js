@@ -1,16 +1,15 @@
-import { useEffect, useState } from "react";
-import { useCompaniesContext } from "../../hooks/useCompaniesContext";
+import { useEffect } from "react";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
 import { useAuthContext } from "../../hooks/useAuthContext";
-import { useEmployeesContext } from "../../hooks/useEmployeesContext";
-import { useNavigate } from "react-router-dom";
-import useFetchCompanies from "../../hooks/useFetchCompanies";
+import { useCompaniesContext } from "../../hooks/useCompaniesContext";
+import { useEmployeeContext } from "../../hooks/useEmployeeContext";
 
-const AddEmployeeForm = () => {
-  const { companies } = useCompaniesContext();
-  const { dispatch } = useEmployeesContext();
-  const { fetchCompanies } = useFetchCompanies();
+const EmployeeDetailsForm = () => {
+  const { id } = useParams();
   const { user } = useAuthContext();
-  const navigate = useNavigate();
+  const { companies } = useCompaniesContext();
+  const { employee, dispatch } = useEmployeeContext();
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -18,14 +17,20 @@ const AddEmployeeForm = () => {
   const [phone, setPhone] = useState("");
   const [company, setCompany] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
-
-  useEffect(() => {
-    fetchCompanies();
-  }, []);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const handleCheck = () => {
     setIsAdmin(!isAdmin);
   };
+
+  useEffect(() => {
+    setFirstName(employee.first_name);
+    setLastName(employee.last_name);
+    setEmail(employee.email);
+    setPhone(employee.phone);
+    setCompany(employee.company);
+    setIsAdmin(employee.is_admin);
+  }, [employee]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,8 +44,8 @@ const AddEmployeeForm = () => {
       is_admin: isAdmin,
     };
 
-    const response = await fetch("/signup", {
-      method: "POST",
+    const response = await fetch("/api/update-employee/" + id, {
+      method: "PATCH",
       body: JSON.stringify(data),
       headers: {
         Authorization: `Bearer ${user.token}`,
@@ -51,14 +56,22 @@ const AddEmployeeForm = () => {
     const new_employee = await response.json();
 
     if (response.ok) {
-      dispatch({ type: "ADD_EMPLOYEES", payload: new_employee });
-      navigate("/employees/" + new_employee._id);
+      dispatch({ type: "SET_EMPLOYEE", payload: new_employee });
+      setIsSuccess(true);
+      setTimeout(() => setIsSuccess(false), 2000);
+    }
+
+    if (!response.ok) {
+      console.log(response);
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <div className="card-body">
+        <div className="form-group">
+          <label htmlFor="first-name">ID: {employee._id}</label>
+        </div>
         <div className="form-group">
           <label htmlFor="first-name">First Name</label>
           <input
@@ -141,9 +154,15 @@ const AddEmployeeForm = () => {
         <button type="submit" className="btn btn-primary">
           Submit
         </button>
+
+        {isSuccess && (
+          <h5 style={{ color: "green", marginTop: "10px" }}>
+            Changes are successfuly saved!
+          </h5>
+        )}
       </div>
     </form>
   );
 };
 
-export default AddEmployeeForm;
+export default EmployeeDetailsForm;

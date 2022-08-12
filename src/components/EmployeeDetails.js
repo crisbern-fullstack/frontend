@@ -1,6 +1,15 @@
-import AddEmployeeForm from "./add-employee/AddEmployeeForm";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useFetchEmployee } from "../hooks/useFetchEmployee";
+import EmployeeDetailsForm from "./employee-details/EmployeeDetailsForm";
 
-const AddEmployee = () => {
+const EmployeeDetails = () => {
+  const { id } = useParams();
+  const { fetchEmployee, error, isLoading } = useFetchEmployee();
+
+  useEffect(() => {
+    fetchEmployee(id);
+  }, []);
   return (
     <div className="content-wrapper">
       {/* Content Header (Page header) */}
@@ -8,7 +17,7 @@ const AddEmployee = () => {
         <div className="container-fluid">
           <div className="row mb-2">
             <div className="col-sm-6">
-              <h1>Add New Employee</h1>
+              <h1>Edit Employee</h1>
             </div>
           </div>
         </div>
@@ -27,7 +36,7 @@ const AddEmployee = () => {
                 </div>
                 {/* /.card-header */}
                 {/* form start */}
-                <AddEmployeeForm />
+                <EmployeeDetailsForm />
               </div>
               {/* /.card */}
             </div>
@@ -42,4 +51,4 @@ const AddEmployee = () => {
   );
 };
 
-export default AddEmployee;
+export default EmployeeDetails;

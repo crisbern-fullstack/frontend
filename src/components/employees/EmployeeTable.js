@@ -78,7 +78,10 @@ const EmployeeTable = () => {
                   companyName(employee.company)}
               </td>
               <td className="">
-                <Link to="" className="btn btn-block btn-warning">
+                <Link
+                  to={`${employee._id}`}
+                  className="btn btn-block btn-warning"
+                >
                   Edit
                 </Link>
                 <button
