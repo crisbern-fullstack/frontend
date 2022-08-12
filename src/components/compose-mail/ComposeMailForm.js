@@ -1,6 +1,8 @@
 import { useState } from "react";
 import DateTimePicker from "react-datetime-picker";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const ComposeMailForm = () => {
   const { user } = useAuthContext();
@@ -68,15 +70,7 @@ const ComposeMailForm = () => {
           />
         </div>
         <div className="form-group">
-          <textarea
-            id="compose-textarea"
-            className="form-control"
-            style={{ height: 300 }}
-            value={message}
-            onChange={(e) => {
-              setMessage(e.target.value);
-            }}
-          />
+          <ReactQuill theme="snow" value={message} onChange={setMessage} />
         </div>
       </div>
       {/* /.card-body */}
