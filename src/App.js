@@ -7,6 +7,7 @@ import CompanyDetails from "./components/CompanyDetails";
 import Employees from "./components/Employees";
 import AddEmployee from "./components/AddEmployee";
 import EmployeeDetails from "./components/EmployeeDetails";
+import ComposeMail from "./components/ComposeMail";
 import { useAuthContext } from "./hooks/useAuthContext";
 
 function App() {
@@ -40,6 +41,10 @@ function App() {
           <Route
             path="employees/:id"
             element={user ? <EmployeeDetails /> : <Navigate to="login" />}
+          />
+          <Route
+            path="mail"
+            element={user ? <ComposeMail /> : <Navigate to="login"></Navigate>}
           />
         </Route>
       </Routes>

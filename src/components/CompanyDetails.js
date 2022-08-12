@@ -1,22 +1,31 @@
 import CompanyDetailsForm from "./company-details/CompanyDetailsForm";
 import CompanyCard from "./company-details/CompanyCard";
+import CompanyEmployeesTable from "./company-details/CompanyEmployeesTable";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useCompanyContext } from "../hooks/useCompanyContext";
 import { useFetchCompany } from "../hooks/useFetchCompany";
+import useFetchEmployees from "../hooks/useFetchEmployees";
+import { CSVLink } from "react-csv";
+import { useEmployeesContext } from "../hooks/useEmployeesContext";
 
 const CompanyDetails = () => {
   const { id } = useParams();
   const { fetchCompany, isLoading, error } = useFetchCompany();
+  const { fetchEmployees } = useFetchEmployees();
   const { company, dispatch } = useCompanyContext();
+  const { dispatch: employeesDispatch } = useEmployeesContext();
   const { user } = useAuthContext();
 
   useEffect(() => {
     dispatch({ type: "CLEAR_COMPANY" });
     if (user) {
       fetchCompany(id);
+      fetchEmployees();
     }
+    employeesDispatch({ type: "FILTER_BY_COMPANY", payload: id });
+    console.log("rendered at company details");
   }, []);
 
   if (company === undefined) {
@@ -64,6 +73,24 @@ const CompanyDetails = () => {
               {/* /.card */}
             </div>
             {/*/.col (left) */}
+          </div>
+          <div className="row">
+            <div className="col">
+              <div className="card card-info">
+                <div className="card-header">
+                  <h3 className="card-title">{company.name} Employees</h3>
+                  <CSVLink data={[["name", "last_name"]]}>Download Me</CSVLink>
+                </div>
+                {/* /.card-header */}
+                <div className="card-body ">
+                  <div className="table-responsive">
+                    {/* <EmployeeTable /> */}
+                    <CompanyEmployeesTable _id={id} />
+                  </div>
+                </div>
+                {/* /.card-body */}
+              </div>
+            </div>
           </div>
           {/* /.row */}
         </div>

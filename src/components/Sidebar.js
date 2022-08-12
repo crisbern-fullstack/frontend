@@ -84,6 +84,12 @@ const Sidebar = () => {
                 <p>Employees</p>
               </Link>
             </li>
+            <li className="nav-item">
+              <Link to="mail" className="nav-link">
+                <i className="nav-icon fas fa-tachometer-alt" />
+                <p>Compose Mail</p>
+              </Link>
+            </li>
           </ul>
         </nav>
         {/* /.sidebar-menu */}

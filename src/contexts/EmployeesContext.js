@@ -22,6 +22,12 @@ export const employeesReducer = (state, action) => {
       return {
         employees: "",
       };
+    case "FILTER_BY_COMPANY":
+      return {
+        employees: state.employees.filter(
+          (employee) => employee.company === action.payload
+        ),
+      };
     default:
       return state;
   }

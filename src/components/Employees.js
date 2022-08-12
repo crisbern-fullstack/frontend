@@ -41,12 +41,12 @@ const Employees = () => {
         <div className="container-fluid">
           <div className="row">
             <div className="col-12">
-              <div className="card">
+              <div className="card card-info">
                 <div className="card-header">
                   <h3 className="card-title">Employees Details</h3>
                 </div>
                 {/* /.card-header */}
-                <div className="card-body ">
+                <div className="card-body">
                   <div className="table-responsive">
                     {/* <EmployeeTable /> */}
                     <EmployeeTable />

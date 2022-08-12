@@ -39,7 +39,7 @@ const AddCompanyForm = () => {
     }
 
     if (!response.ok) {
-      console.log("Error");
+      console.log(new_company);
     }
   };
 

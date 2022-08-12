@@ -39,7 +39,7 @@ const Companies = () => {
         <div className="container-fluid">
           <div className="row">
             <div className="col-12">
-              <div className="card">
+              <div className="card card-info">
                 <div className="card-header">
                   <h3 className="card-title">Company Details</h3>
                 </div>
