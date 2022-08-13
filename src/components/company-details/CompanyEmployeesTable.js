@@ -1,11 +1,32 @@
-import { useEmployeesContext } from "../../hooks/useEmployeesContext";
+import { CSVLink } from "react-csv";
 
-const CompanyEmployeesTable = ({ _id }) => {
-  const { employees } = useEmployeesContext();
+const CompanyEmployeesTable = ({ company, employees }) => {
+  const csv_headers = [
+    { label: "_id", key: "_id" },
+    { label: "first_name", key: "first_name" },
+    { label: "last_name", key: "last_name" },
+    { label: "company", key: "company" },
+    { label: "email", key: "email" },
+    { label: "password", key: "password" },
+    { label: "is_admin", key: "is_admin" },
+  ];
 
   return (
     <table id="example2" className="table table-bordered table-hover">
       <thead>
+        <tr>
+          <th colSpan={5}>
+            <CSVLink
+              className="btn btn-success"
+              headers={csv_headers}
+              data={company.employees ? company.employees : [[]]}
+              separator={";"}
+              filename={`Employees of ${company.name}`}
+            >
+              Export as CSV
+            </CSVLink>
+          </th>
+        </tr>
         <tr>
           <th>ID</th>
           <th>First Name</th>
@@ -15,7 +36,7 @@ const CompanyEmployeesTable = ({ _id }) => {
         </tr>
       </thead>
       <tbody>
-        {employees &&
+        {employees !== [] &&
           employees.map((employee) => (
             <tr key={employee._id}>
               <td style={{ wordWrap: "break-word", maxWidth: "200px" }}>

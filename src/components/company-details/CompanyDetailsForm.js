@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import { useCompanyContext } from "../../hooks/useCompanyContext";
 
-const CompanyDetailsForm = ({ isLoading, id, user }) => {
-  const { dispatch, company } = useCompanyContext();
+const CompanyDetailsForm = ({ isLoading, id, user, company, setCompany }) => {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [website, setWebsite] = useState();
@@ -31,8 +29,8 @@ const CompanyDetailsForm = ({ isLoading, id, user }) => {
     const updated_company = await response.json();
 
     if (response.ok) {
-      dispatch({ type: "SET_COMPANY", payload: updated_company });
       setIsSuccess(true);
+      setCompany(updated_company);
       setTimeout(() => setIsSuccess(false), 2000);
     }
 

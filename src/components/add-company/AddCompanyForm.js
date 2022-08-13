@@ -11,6 +11,7 @@ const AddCompanyForm = () => {
     file: "",
     name: "",
   });
+  const [error, setError] = useState(null);
   const { user } = useAuthContext();
   const naviagte = useNavigate();
   const { dispatch } = useCompaniesContext();
@@ -39,7 +40,8 @@ const AddCompanyForm = () => {
     }
 
     if (!response.ok) {
-      console.log(new_company);
+      console.log(new_company.error);
+      setError(new_company.error);
     }
   };
 
@@ -106,6 +108,7 @@ const AddCompanyForm = () => {
         <button type="submit" className="btn btn-primary">
           Submit
         </button>
+        {error && <div className="alert alert-danger">{error}</div>}
       </div>
     </form>
   );

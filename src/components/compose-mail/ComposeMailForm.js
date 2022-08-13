@@ -46,15 +46,19 @@ const ComposeMailForm = () => {
         <div className="form-group">
           <input
             className="form-control"
-            placeholder="From:"
+            required
+            placeholder="From: <Name> <email>"
             value={sender}
             onChange={(e) => setSender(e.target.value)}
           />
         </div>
         <div className="form-group">
           <input
+            type="email"
+            multiple
+            required
             className="form-control"
-            placeholder="To:"
+            placeholder="To: "
             value={receivers}
             onChange={(e) => setReceivers(e.target.value)}
           />

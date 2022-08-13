@@ -6,10 +6,7 @@ import { AuthContextProvider } from "./contexts/AuthContext";
 import { CompanyContextProvider } from "./contexts/CompanyContext";
 import { CompaniesContextProvider } from "./contexts/CompaniesContext";
 import { EmployeesContextProvider } from "./contexts/EmployeesContext";
-import {
-  EmployeeContext,
-  EmployeeContextProvider,
-} from "./contexts/EmployeeContext";
+import { EmployeeContextProvider } from "./contexts/EmployeeContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

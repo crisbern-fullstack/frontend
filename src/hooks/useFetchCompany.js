@@ -21,7 +21,6 @@ export const useFetchCompany = () => {
     if (response.ok) {
       setIsLoading(false);
       dispatch({ type: "SET_COMPANY", payload: company });
-      console.log("details loaded");
       return;
     }
 

@@ -1,13 +1,16 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import useFetchCompany from "../hooks/useFetchCompany";
 import { useFetchEmployee } from "../hooks/useFetchEmployee";
 import EmployeeDetailsForm from "./employee-details/EmployeeDetailsForm";
 
 const EmployeeDetails = () => {
+  const { fetchCompany } = useFetchCompany();
   const { id } = useParams();
   const { fetchEmployee, error, isLoading } = useFetchEmployee();
 
   useEffect(() => {
+    fetchCompany("62f77647cb1927e9ecb70ed7");
     fetchEmployee(id);
   }, []);
   return (

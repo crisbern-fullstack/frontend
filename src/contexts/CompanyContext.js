@@ -2,7 +2,7 @@ import { createContext, useReducer } from "react";
 
 export const CompanyContext = createContext();
 
-export const companyReducer = (state, action) => {
+export const companyReducer = async (state, action) => {
   switch (action.type) {
     case "SET_COMPANY":
       return {
