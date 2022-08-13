@@ -1,24 +1,8 @@
-import { useEffect, useState } from "react";
-import { useAuthContext } from "../../hooks/useAuthContext";
 import { Link } from "react-router-dom";
 import { useCompaniesContext } from "../../hooks/useCompaniesContext";
 
-const CompanyTable = () => {
-  const { user } = useAuthContext();
-  const { companies, dispatch } = useCompaniesContext();
-
-  const handleDelete = async (_id) => {
-    const response = await fetch(`/api/delete-company/${_id}`, {
-      method: "DELETE",
-      headers: { Authorization: `Bearer ${user.token}` },
-    });
-
-    const deleted_company = await response.json();
-
-    if (response.ok) {
-      dispatch({ type: "DELETE_COMPANIES", payload: deleted_company });
-    }
-  };
+const CompanyTable = ({ setShowOverLay, setCompany, setId }) => {
+  const { companies } = useCompaniesContext();
 
   return (
     <table id="example2" className="table table-bordered table-hover">
@@ -59,7 +43,9 @@ const CompanyTable = () => {
                 </Link>
                 <button
                   onClick={(e) => {
-                    handleDelete(company._id);
+                    setId(company._id);
+                    setCompany(company.name);
+                    setShowOverLay(true);
                   }}
                   className="btn btn-block btn-danger"
                 >

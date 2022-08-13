@@ -1,29 +1,13 @@
 import { useEmployeesContext } from "../../hooks/useEmployeesContext";
-import { useAuthContext } from "../../hooks/useAuthContext";
 import { useCompaniesContext } from "../../hooks/useCompaniesContext";
 import useFetchCompanies from "../../hooks/useFetchCompanies";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 
-const EmployeeTable = () => {
-  const { employees, dispatch } = useEmployeesContext();
-  const { user } = useAuthContext();
+const EmployeeTable = ({ setEmployee, setShowOverlay, setId }) => {
+  const { employees } = useEmployeesContext();
   const { companies } = useCompaniesContext();
   const { fetchCompanies } = useFetchCompanies();
-
-  const handleDelete = async (_id) => {
-    const response = await fetch(`/api/delete-employee/${_id}`, {
-      method: "DELETE",
-      headers: { Authorization: `Bearer ${user.token}` },
-    });
-
-    const deleted_employee = await response.json();
-
-    if (response.ok) {
-      console.log(deleted_employee);
-      dispatch({ type: "DELETE_EMPLOYEES", payload: deleted_employee });
-    }
-  };
 
   useEffect(() => {
     fetchCompanies();
@@ -85,7 +69,11 @@ const EmployeeTable = () => {
                   Edit
                 </Link>
                 <button
-                  onClick={(e) => handleDelete(employee._id)}
+                  onClick={(e) => {
+                    setId(employee._id);
+                    setEmployee(employee.first_name + employee.last_name);
+                    setShowOverlay(true);
+                  }}
                   className="btn btn-block btn-danger"
                 >
                   Delete
