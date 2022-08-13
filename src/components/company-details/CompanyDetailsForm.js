@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const CompanyDetailsForm = ({ isLoading, id, user, company, setCompany }) => {
+const CompanyDetailsForm = ({ id, user, company, setCompany }) => {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [website, setWebsite] = useState();
@@ -9,9 +9,13 @@ const CompanyDetailsForm = ({ isLoading, id, user, company, setCompany }) => {
     name: "",
   });
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(null);
+  const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setIsLoading(true);
 
     const formData = new FormData();
 
@@ -29,13 +33,16 @@ const CompanyDetailsForm = ({ isLoading, id, user, company, setCompany }) => {
     const updated_company = await response.json();
 
     if (response.ok) {
+      setIsLoading(false);
       setIsSuccess(true);
+      setError(null);
       setCompany(updated_company);
       setTimeout(() => setIsSuccess(false), 2000);
     }
 
     if (!response.ok) {
-      console.log(updated_company.error);
+      setIsLoading(false);
+      setError(updated_company);
     }
   };
 
@@ -96,6 +103,7 @@ const CompanyDetailsForm = ({ isLoading, id, user, company, setCompany }) => {
                 type="file"
                 className="custom-file-input"
                 id="company-logo"
+                accept=".jpg .jpeg .png"
                 onChange={(e) => {
                   setLogo({ name: e.target.value, file: e.target.files[0] });
                 }}
@@ -109,13 +117,30 @@ const CompanyDetailsForm = ({ isLoading, id, user, company, setCompany }) => {
       </div>
       {/* /.card-body */}
       <div className="card-footer">
-        <button type="submit" className="btn btn-primary">
-          Save Edits
-        </button>
+        {!isLoading && (
+          <button type="submit" className="btn btn-primary">
+            Save Edits
+          </button>
+        )}
+        {isLoading && (
+          <div>
+            <img
+              src="/loading.gif"
+              style={{ maxWidth: "50px", maxHeight: "50px" }}
+              className="img-responsive"
+            />
+            <h5 style={{ color: "blue" }}>Saving...</h5>
+          </div>
+        )}
         {isSuccess && (
           <h5 style={{ color: "green", marginTop: "10px" }}>
             Changes are successfuly saved!
           </h5>
+        )}
+        {error && (
+          <div style={{ marginTop: "10px" }} className="alert alert-danger">
+            {error}
+          </div>
         )}
       </div>
     </form>

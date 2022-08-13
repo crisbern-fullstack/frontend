@@ -12,12 +12,15 @@ const AddCompanyForm = () => {
     name: "",
   });
   const [error, setError] = useState(null);
+  const [isLoading, setIsloading] = useState(false);
   const { user } = useAuthContext();
   const naviagte = useNavigate();
   const { dispatch } = useCompaniesContext();
 
   const handleSumbit = async (e) => {
     e.preventDefault();
+
+    setIsloading(true);
 
     const formData = new FormData();
 
@@ -35,12 +38,13 @@ const AddCompanyForm = () => {
     const new_company = await response.json();
 
     if (response.ok) {
+      setIsloading(false);
       dispatch({ type: "ADD_COMPANIES", payload: new_company });
       naviagte("/companies/" + new_company._id);
     }
 
     if (!response.ok) {
-      console.log(new_company.error);
+      setIsloading(false);
       setError(new_company.error);
     }
   };
@@ -89,6 +93,7 @@ const AddCompanyForm = () => {
                 type="file"
                 className="custom-file-input"
                 id="company-logo"
+                accept=".jpg, .jpeg, .png,"
                 onChange={(e) => {
                   setLogo({ name: e.target.value, file: e.target.files[0] });
                 }}
@@ -105,10 +110,26 @@ const AddCompanyForm = () => {
       </div>
       {/* /.card-body */}
       <div className="card-footer">
-        <button type="submit" className="btn btn-primary">
-          Submit
-        </button>
-        {error && <div className="alert alert-danger">{error}</div>}
+        {!isLoading && (
+          <button type="submit" className="btn btn-primary">
+            Submit
+          </button>
+        )}
+        {isLoading && (
+          <div>
+            <img
+              src="/loading.gif"
+              style={{ maxWidth: "100px", maxHeight: "100px" }}
+              className="img-responsive"
+            />
+            <h3 style={{ color: "blue" }}>Saving...</h3>
+          </div>
+        )}
+        {error && (
+          <div style={{ marginTop: "10px" }} className="alert alert-danger">
+            {error}
+          </div>
+        )}
       </div>
     </form>
   );

@@ -4,12 +4,14 @@ import { useParams } from "react-router-dom";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useCompaniesContext } from "../../hooks/useCompaniesContext";
 import { useEmployeeContext } from "../../hooks/useEmployeeContext";
+import useFetchCompanies from "../../hooks/useFetchCompanies";
 
 const EmployeeDetailsForm = () => {
   const { id } = useParams();
   const { user } = useAuthContext();
   const { companies } = useCompaniesContext();
   const { employee, dispatch } = useEmployeeContext();
+  const { fetchCompanies } = useFetchCompanies();
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -18,12 +20,15 @@ const EmployeeDetailsForm = () => {
   const [company, setCompany] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(null);
+  const [error, setError] = useState(null);
 
   const handleCheck = () => {
     setIsAdmin(!isAdmin);
   };
 
   useEffect(() => {
+    fetchCompanies();
     setFirstName(employee.first_name);
     setLastName(employee.last_name);
     setEmail(employee.email);
@@ -34,6 +39,8 @@ const EmployeeDetailsForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setIsLoading(true);
 
     const data = {
       first_name: firstName,
@@ -56,13 +63,15 @@ const EmployeeDetailsForm = () => {
     const new_employee = await response.json();
 
     if (response.ok) {
+      setIsLoading(false);
       dispatch({ type: "SET_EMPLOYEE", payload: new_employee });
       setIsSuccess(true);
       setTimeout(() => setIsSuccess(false), 2000);
     }
 
     if (!response.ok) {
-      console.log(response);
+      setIsLoading(false);
+      setError(new_employee.error);
     }
   };
 
@@ -151,14 +160,30 @@ const EmployeeDetailsForm = () => {
       </div>
       {/* /.card-body */}
       <div className="card-footer">
-        <button type="submit" className="btn btn-primary">
-          Submit
-        </button>
-
+        {!isLoading && (
+          <button type="submit" className="btn btn-primary">
+            Submit
+          </button>
+        )}
+        {isLoading && (
+          <div>
+            <img
+              src="/loading.gif"
+              style={{ maxWidth: "50px", maxHeight: "50px" }}
+              className="img-responsive"
+            />
+            <h5 style={{ color: "blue" }}>Saving...</h5>
+          </div>
+        )}
         {isSuccess && (
           <h5 style={{ color: "green", marginTop: "10px" }}>
             Changes are successfuly saved!
           </h5>
+        )}
+        {error && (
+          <div style={{ marginTop: "10px" }} className="alert alert-danger">
+            {error}
+          </div>
         )}
       </div>
     </form>

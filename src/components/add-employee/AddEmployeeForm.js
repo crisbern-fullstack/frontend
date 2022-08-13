@@ -19,6 +19,9 @@ const AddEmployeeForm = () => {
   const [company, setCompany] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
 
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     fetchCompanies();
   }, []);
@@ -29,6 +32,8 @@ const AddEmployeeForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setIsLoading(true);
 
     const data = {
       first_name: firstName,
@@ -51,8 +56,14 @@ const AddEmployeeForm = () => {
     const new_employee = await response.json();
 
     if (response.ok) {
+      setIsLoading(false);
       dispatch({ type: "ADD_EMPLOYEES", payload: new_employee });
       navigate("/employees/" + new_employee._id);
+    }
+
+    if (!response.ok) {
+      setIsLoading(false);
+      setError(new_employee.error);
     }
   };
 
@@ -138,9 +149,26 @@ const AddEmployeeForm = () => {
       </div>
       {/* /.card-body */}
       <div className="card-footer">
-        <button type="submit" className="btn btn-primary">
-          Submit
-        </button>
+        {!isLoading && (
+          <button type="submit" className="btn btn-primary">
+            Submit
+          </button>
+        )}
+        {isLoading && (
+          <div>
+            <img
+              src="/loading.gif"
+              style={{ maxWidth: "100px", maxHeight: "100px" }}
+              className="img-responsive"
+            />
+            <h3 style={{ color: "blue" }}>Saving...</h3>
+          </div>
+        )}
+        {error && (
+          <div style={{ marginTop: "10px" }} className="alert alert-danger">
+            {error}
+          </div>
+        )}
       </div>
     </form>
   );

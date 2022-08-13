@@ -2,13 +2,7 @@ import Papa from "papaparse";
 import { useState } from "react";
 import { useAuthContext } from "../../hooks/useAuthContext";
 
-const ImportEmployeesTable = ({
-  company_id,
-  company,
-  setCompany,
-  employees,
-  setEmployees,
-}) => {
+const ImportEmployeesTable = ({ company_id, employees, setEmployees }) => {
   const [csvFile, setCsvFile] = useState({
     name: "",
     file: "",
@@ -73,12 +67,6 @@ const ImportEmployeesTable = ({
 
       if (response.ok) {
         setEmployees((previous_state) => [...previous_state, new_employee]);
-        // setImportedEmployees((previous_state) => {
-        //   previous_state.filter(
-        //     (employee) => employee._id === new_employee._id
-        //   );
-        // });
-        // setSuccessfulImports([new_employee]);
       }
 
       if (!response.ok) {
@@ -117,11 +105,28 @@ const ImportEmployeesTable = ({
                 </div>
                 <div className="input-group-append">
                   <span>
-                    <button onClick={handleLoad} className="btn btn-success">
+                    <button
+                      style={{ marginRight: "3px", marginLeft: "3px" }}
+                      onClick={handleLoad}
+                      className="btn btn-success"
+                    >
                       Load
                     </button>
-                    <button onClick={handleImport} className="btn btn-primary">
+                    <button
+                      style={{ marginRight: "3px", marginLeft: "3px" }}
+                      onClick={handleImport}
+                      className="btn btn-primary"
+                    >
                       Import
+                    </button>
+                    <button
+                      style={{ marginRight: "3px", marginLeft: "3px" }}
+                      onClick={(e) => {
+                        setImportedEmployees([]);
+                      }}
+                      className="btn btn-danger"
+                    >
+                      Clear
                     </button>
                   </span>
                 </div>

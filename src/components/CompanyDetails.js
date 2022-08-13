@@ -112,7 +112,7 @@ const CompanyDetails = () => {
               <div className="card card-info">
                 <div className="card-header">
                   <h3 className="card-title">
-                    {/* Import Employees to {company.name} */}
+                    Import Employees to {company.name}
                   </h3>
                 </div>
                 {/* /.card-header */}
