@@ -90,6 +90,12 @@ const Sidebar = () => {
                 <p>Compose Mail</p>
               </Link>
             </li>
+            <li className="nav-item">
+              <Link to="mail/sent" className="nav-link">
+                <i className="nav-icon fas fa-tachometer-alt" />
+                <p>Sent Mails</p>
+              </Link>
+            </li>
           </ul>
         </nav>
         {/* /.sidebar-menu */}

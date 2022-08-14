@@ -8,6 +8,8 @@ import Employees from "./components/Employees";
 import AddEmployee from "./components/AddEmployee";
 import EmployeeDetails from "./components/EmployeeDetails";
 import ComposeMail from "./components/ComposeMail";
+import SentMails from "./components/SentMails";
+import ReadMails from "./components/ReadMails";
 import { useAuthContext } from "./hooks/useAuthContext";
 
 function App() {
@@ -45,6 +47,14 @@ function App() {
           <Route
             path="mail"
             element={user ? <ComposeMail /> : <Navigate to="login"></Navigate>}
+          />
+          <Route
+            path="mail/sent"
+            element={user ? <SentMails /> : <Navigate to="login"></Navigate>}
+          />
+          <Route
+            path="mail/:id"
+            element={user ? <ReadMails /> : <Navigate to="login"></Navigate>}
           />
         </Route>
       </Routes>

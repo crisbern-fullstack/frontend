@@ -3,6 +3,7 @@ import DateTimePicker from "react-datetime-picker";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { useNavigate } from "react-router-dom";
 
 const ComposeMailForm = () => {
   const { user } = useAuthContext();
@@ -11,6 +12,7 @@ const ComposeMailForm = () => {
   const [receivers, setReceivers] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleSend = async () => {
     const email_args = {
@@ -19,6 +21,8 @@ const ComposeMailForm = () => {
       subject: subject,
       text: message,
       html: message,
+      date: new Date(),
+      sent: true,
     };
 
     const response = await fetch("/send-email", {
@@ -31,6 +35,35 @@ const ComposeMailForm = () => {
     });
 
     const email = await response.json();
+
+    if (response.ok) {
+      navigate("/mail/sent");
+    }
+  };
+
+  const handleSendLater = async () => {
+    const email_args = {
+      sender: sender,
+      receivers: receivers,
+      subject: subject,
+      text: message,
+      html: message,
+      date: date,
+      sent: false,
+    };
+
+    const response = await fetch("/send-scheduled-email", {
+      method: "POST",
+      body: JSON.stringify(email_args),
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    const email = await response.json();
+
+    console.log(email);
 
     if (response.ok) {
       setSender("");
@@ -99,7 +132,11 @@ const ComposeMailForm = () => {
             value={date}
             minDate={new Date()}
           />
-          <button type="submit" className="btn btn-success">
+          <button
+            onClick={handleSendLater}
+            type="submit"
+            className="btn btn-success"
+          >
             <i className="far fa-envelope" /> Send Later
           </button>
         </div>
