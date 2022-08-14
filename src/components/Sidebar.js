@@ -31,8 +31,6 @@ const Sidebar = () => {
             data-accordion="false"
           >
             <li class="nav-header">Shortcuts</li>
-            {/* Add icons to the links using the .nav-icon class
-            with font-awesome or any other icon font library */}
             <li className="nav-item">
               <Link to="/" className="nav-link">
                 <i className="nav-icon fas fa-tachometer-alt" />
@@ -46,31 +44,42 @@ const Sidebar = () => {
                 <p>Companies</p>
               </Link>
             </li>
+            {/* Employees */}
             <li className="nav-item">
               <Link to="employees" className="nav-link">
                 <i class="nav-icon fa-solid fa-person-walking-luggage"></i>
                 <p>Employees</p>
               </Link>
             </li>
-            <li class="nav-header">Mail</li>
-            <li className="nav-item">
-              <Link to="mail" className="nav-link">
-                <i class="nav-icon fa-solid fa-envelope"></i>
-                <p>Compose Mail</p>
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="mail/sent" className="nav-link">
-                <i class="nav-icon fa-solid fa-envelope-open"></i>
-                <p>Sent Mails</p>
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="mail/scheduled" className="nav-link">
-                <i class="nav-icon fa-solid fa-clock"></i>
-                <p>Scheduled Mails</p>
-              </Link>
-            </li>
+            {/* Mails */}
+            {user.isAdmin && <li class="nav-header">Mail</li>}
+
+            {user.isAdmin && (
+              <li className="nav-item">
+                <Link to="mail" className="nav-link">
+                  <i class="nav-icon fa-solid fa-envelope"></i>
+                  <p>Compose Mail</p>
+                </Link>
+              </li>
+            )}
+
+            {user.isAdmin && (
+              <li className="nav-item">
+                <Link to="mail/sent" className="nav-link">
+                  <i class="nav-icon fa-solid fa-envelope-open"></i>
+                  <p>Sent Mails</p>
+                </Link>
+              </li>
+            )}
+
+            {user.isAdmin && (
+              <li className="nav-item">
+                <Link to="mail/scheduled" className="nav-link">
+                  <i class="nav-icon fa-solid fa-clock"></i>
+                  <p>Scheduled Mails</p>
+                </Link>
+              </li>
+            )}
           </ul>
         </nav>
         {/* /.sidebar-menu */}

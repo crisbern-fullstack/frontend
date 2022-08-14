@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { useCompaniesContext } from "../../hooks/useCompaniesContext";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const CompanyTable = ({ setShowOverLay, setCompany, setId }) => {
   const { companies } = useCompaniesContext();
+  const { user } = useAuthContext();
 
   return (
     <table id="example2" className="table table-bordered table-hover">
@@ -39,18 +41,20 @@ const CompanyTable = ({ setShowOverLay, setCompany, setId }) => {
                   to={`${company._id}`}
                   className="btn btn-block btn-warning"
                 >
-                  Edit
+                  View
                 </Link>
-                <button
-                  onClick={(e) => {
-                    setId(company._id);
-                    setCompany(company.name);
-                    setShowOverLay(true);
-                  }}
-                  className="btn btn-block btn-danger"
-                >
-                  Delete
-                </button>
+                {user.isAdmin && (
+                  <button
+                    onClick={(e) => {
+                      setId(company._id);
+                      setCompany(company.name);
+                      setShowOverLay(true);
+                    }}
+                    className="btn btn-block btn-danger"
+                  >
+                    Delete
+                  </button>
+                )}
               </td>
             </tr>
           ))}

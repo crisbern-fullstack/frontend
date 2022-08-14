@@ -21,49 +21,75 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="login" element={!user ? <Login /> : <Navigate to="/" />} />
-        <Route path="/" element={user ? <Main /> : <Navigate to="login" />}>
-          <Route path="" element={user ? <Home /> : <Navigate to="login" />} />
+        <Route path="/" element={user ? <Main /> : <Navigate to="/login" />}>
+          <Route path="" element={user ? <Home /> : <Navigate to="/login" />} />
           <Route
             path="companies"
-            element={user ? <Companies /> : <Navigate to="login" />}
+            element={user ? <Companies /> : <Navigate to="/login" />}
           />
           <Route
             path="companies/add-company"
-            element={user ? <AddCompany /> : <Navigate to="login" />}
+            element={
+              user && user.isAdmin ? <AddCompany /> : <Navigate to="/login" />
+            }
           />
           <Route
             path="companies/:id"
-            element={user ? <CompanyDetails /> : <Navigate to="login" />}
+            element={user ? <CompanyDetails /> : <Navigate to="/login" />}
           />
           <Route
             path="employees"
-            element={user ? <Employees /> : <Navigate to="login" />}
+            element={user ? <Employees /> : <Navigate to="/login" />}
           />
           <Route
             path="employees/add-employee"
-            element={user ? <AddEmployee /> : <Navigate to="login" />}
+            element={
+              user && user.isAdmin ? <AddEmployee /> : <Navigate to="/login" />
+            }
           />
           <Route
             path="employees/:id"
-            element={user ? <EmployeeDetails /> : <Navigate to="login" />}
+            element={user ? <EmployeeDetails /> : <Navigate to="/login" />}
           />
           <Route
             path="mail"
-            element={user ? <ComposeMail /> : <Navigate to="login"></Navigate>}
+            element={
+              user && user.isAdmin ? (
+                <ComposeMail />
+              ) : (
+                <Navigate to="/login"></Navigate>
+              )
+            }
           />
           <Route
             path="mail/sent"
-            element={user ? <SentMails /> : <Navigate to="login"></Navigate>}
+            element={
+              user && user.isAdmin ? (
+                <SentMails />
+              ) : (
+                <Navigate to="/login"></Navigate>
+              )
+            }
           />
           <Route
             path="mail/scheduled"
             element={
-              user ? <ScheduledMails /> : <Navigate to="login"></Navigate>
+              user && user.isAdmin ? (
+                <ScheduledMails />
+              ) : (
+                <Navigate to="/login"></Navigate>
+              )
             }
           />
           <Route
             path="mail/:id"
-            element={user ? <ReadMails /> : <Navigate to="login"></Navigate>}
+            element={
+              user && user.isAdmin ? (
+                <ReadMails />
+              ) : (
+                <Navigate to="/login"></Navigate>
+              )
+            }
           />
         </Route>
       </Routes>

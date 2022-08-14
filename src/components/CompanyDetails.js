@@ -107,30 +107,34 @@ const CompanyDetails = () => {
             </div>
           </div>
           {/* /.row */}
-          <div className="row">
-            <div className="col">
-              <div className="card card-info">
-                <div className="card-header">
-                  <h3 className="card-title">
-                    Import Employees to {company.name}
-                  </h3>
-                </div>
-                {/* /.card-header */}
-                <div className="card-body ">
-                  <div className="table-responsive">
-                    <ImportEmployeesTable
-                      company_id={id}
-                      setCompany={setCompany}
-                      company={company}
-                      setEmployees={setEmployees}
-                      employees={employees}
-                    />
+          {user.isAdmin && (
+            <div className="row">
+              <div className="col">
+                <div className="card card-info">
+                  <div className="card-header">
+                    <h3 className="card-title">
+                      Import Employees to {company.name}
+                    </h3>
                   </div>
+                  {/* /.card-header */}
+
+                  <div className="card-body ">
+                    <div className="table-responsive">
+                      <ImportEmployeesTable
+                        company_id={id}
+                        setCompany={setCompany}
+                        company={company}
+                        setEmployees={setEmployees}
+                        employees={employees}
+                      />
+                    </div>
+                  </div>
+
+                  {/* /.card-body */}
                 </div>
-                {/* /.card-body */}
               </div>
             </div>
-          </div>
+          )}
           {/* /.row */}
         </div>
         {/* /.container-fluid */}

@@ -28,6 +28,7 @@ const Companies = () => {
   };
 
   useEffect(() => {
+    console.log(user);
     fetchCompanies();
   }, []);
 
@@ -85,9 +86,11 @@ const Companies = () => {
           <div className="container-fluid">
             <div className="row">
               <div className="col col-5">
-                <Link to="add-company" className="btn btn-success">
-                  <i className="bi bi-plus-circle-fill"></i>Add New Company
-                </Link>
+                {user.isAdmin && (
+                  <Link to="add-company" className="btn btn-success">
+                    <i className="bi bi-plus-circle-fill"></i>Add New Company
+                  </Link>
+                )}
               </div>
             </div>
           </div>

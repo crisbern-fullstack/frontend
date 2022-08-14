@@ -22,9 +22,17 @@ const EmployeeDetailsForm = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(null);
   const [error, setError] = useState(null);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [changePassword, setChangePassword] = useState(false);
 
   const handleCheck = () => {
     setIsAdmin(!isAdmin);
+  };
+
+  const handleChangePassword = () => {
+    setChangePassword(!changePassword);
   };
 
   useEffect(() => {
@@ -51,6 +59,23 @@ const EmployeeDetailsForm = () => {
       is_admin: isAdmin,
     };
 
+    if (changePassword) {
+      if (
+        newPassword !== confirmPassword ||
+        newPassword === "" ||
+        confirmPassword === ""
+      ) {
+        setError(
+          "Passwords did not match or password fields are empty. Please try again."
+        );
+        setIsLoading(false);
+        return;
+      }
+
+      data.password = newPassword;
+      data.current_password = currentPassword;
+    }
+
     const response = await fetch("/api/update-employee/" + id, {
       method: "PATCH",
       body: JSON.stringify(data),
@@ -63,6 +88,7 @@ const EmployeeDetailsForm = () => {
     const new_employee = await response.json();
 
     if (response.ok) {
+      setError(false);
       setIsLoading(false);
       dispatch({ type: "SET_EMPLOYEE", payload: new_employee });
       setIsSuccess(true);
@@ -85,6 +111,7 @@ const EmployeeDetailsForm = () => {
           <label htmlFor="first-name">First Name</label>
           <input
             type="text"
+            readOnly={!user.isAdmin}
             className="form-control"
             placeholder="First Name"
             id="first-name"
@@ -96,6 +123,7 @@ const EmployeeDetailsForm = () => {
           <label htmlFor="last-name">Last Name</label>
           <input
             type="text"
+            readOnly={!user.isAdmin}
             className="form-control"
             placeholder="Last Name"
             id="last-name"
@@ -107,6 +135,7 @@ const EmployeeDetailsForm = () => {
           <label htmlFor="email">Email Address</label>
           <input
             type="email"
+            readOnly={!user.isAdmin}
             className="form-control"
             id="email"
             placeholder="Enter email"
@@ -120,6 +149,7 @@ const EmployeeDetailsForm = () => {
           </label>
           <input
             type="tel"
+            readOnly={!user.isAdmin}
             className="form-control"
             id="phone"
             placeholder="Enter Phone Number"
@@ -132,6 +162,8 @@ const EmployeeDetailsForm = () => {
           <label>Company</label>
           <select
             className="form-control select2"
+            readOnly={!user.isAdmin}
+            disabled={!user.isAdmin}
             style={{ width: "100%" }}
             value={company}
             onChange={(e) => {
@@ -145,22 +177,85 @@ const EmployeeDetailsForm = () => {
               ))}
           </select>
         </div>
-        <div className="form-check">
-          <input
-            type="checkbox"
-            className="form-check-input"
-            id="admin"
-            checked={isAdmin}
-            onChange={handleCheck}
-          />
-          <label className="form-check-label" htmlFor="admin">
-            Admin
-          </label>
-        </div>
+        {user.isAdmin && (
+          <div>
+            {/* Change Password */}
+            <div className="form-check">
+              <input
+                type="checkbox"
+                className="form-check-input"
+                id="change-password"
+                checked={changePassword}
+                onChange={handleChangePassword}
+              />
+              <label className="form-check-label" htmlFor="change-password">
+                Change Password
+              </label>
+            </div>
+            {changePassword && (
+              <div>
+                <h3>Password Change</h3>
+                <div className="form-group">
+                  <label htmlFor="current-password">Current Password</label>
+                  <input
+                    type="password"
+                    readOnly={!user.isAdmin}
+                    className="form-control"
+                    id="current-password"
+                    placeholder="Current Password"
+                    value={currentPassword}
+                    onChange={(e) => setCurrentPassword(e.target.value)}
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="new-password">New Password</label>
+                  <input
+                    type="password"
+                    readOnly={!user.isAdmin}
+                    className="form-control"
+                    id="new-password"
+                    placeholder="New Password"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="confirm-new-password">
+                    Confirm New Password
+                  </label>
+                  <input
+                    type="password"
+                    readOnly={!user.isAdmin}
+                    className="form-control"
+                    id="confirm-new-password"
+                    placeholder="Confirm New Password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+        {/* Check if Admin */}
+        {user.isAdmin && (
+          <div className="form-check">
+            <input
+              type="checkbox"
+              className="form-check-input"
+              id="admin"
+              checked={isAdmin}
+              onChange={handleCheck}
+            />
+            <label className="form-check-label" htmlFor="admin">
+              Admin
+            </label>
+          </div>
+        )}
       </div>
       {/* /.card-body */}
       <div className="card-footer">
-        {!isLoading && (
+        {!isLoading && user.isAdmin && (
           <button type="submit" className="btn btn-primary">
             Submit
           </button>

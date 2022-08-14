@@ -1,6 +1,7 @@
 import { useEmployeesContext } from "../../hooks/useEmployeesContext";
 import { useCompaniesContext } from "../../hooks/useCompaniesContext";
 import useFetchCompanies from "../../hooks/useFetchCompanies";
+import { useAuthContext } from "../../hooks/useAuthContext";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -8,6 +9,7 @@ const EmployeeTable = ({ setEmployee, setShowOverlay, setId }) => {
   const { employees } = useEmployeesContext();
   const { companies } = useCompaniesContext();
   const { fetchCompanies } = useFetchCompanies();
+  const { user } = useAuthContext();
 
   useEffect(() => {
     fetchCompanies();
@@ -38,7 +40,7 @@ const EmployeeTable = ({ setEmployee, setShowOverlay, setId }) => {
           <th>Last Name</th>
           <th>Email</th>
           <th>Number</th>
-          <th>Password</th>
+          {user.isAdmin && <th>Password</th>}
           <th>Company</th>
           <th>Actions</th>
         </tr>
@@ -54,9 +56,11 @@ const EmployeeTable = ({ setEmployee, setShowOverlay, setId }) => {
               <td>{employee.last_name}</td>
               <td>{employee.email}</td>
               <td>{employee.phone}</td>
-              <td style={{ wordWrap: "break-word", maxWidth: "300px" }}>
-                {employee.password}
-              </td>
+              {user.isAdmin && (
+                <td style={{ wordWrap: "break-word", maxWidth: "300px" }}>
+                  {employee.password}
+                </td>
+              )}
               <td>
                 {employee.company !== undefined &&
                   companyName(employee.company)}
@@ -66,18 +70,20 @@ const EmployeeTable = ({ setEmployee, setShowOverlay, setId }) => {
                   to={`${employee._id}`}
                   className="btn btn-block btn-warning"
                 >
-                  Edit
+                  View
                 </Link>
-                <button
-                  onClick={(e) => {
-                    setId(employee._id);
-                    setEmployee(employee.first_name + employee.last_name);
-                    setShowOverlay(true);
-                  }}
-                  className="btn btn-block btn-danger"
-                >
-                  Delete
-                </button>
+                {user.isAdmin && (
+                  <button
+                    onClick={(e) => {
+                      setId(employee._id);
+                      setEmployee(employee.first_name + employee.last_name);
+                      setShowOverlay(true);
+                    }}
+                    className="btn btn-block btn-danger"
+                  >
+                    Delete
+                  </button>
+                )}
               </td>
             </tr>
           ))}
@@ -89,7 +95,7 @@ const EmployeeTable = ({ setEmployee, setShowOverlay, setId }) => {
           <th>Last Name</th>
           <th>Email</th>
           <th>Number</th>
-          <th>Password</th>
+          {user.isAdmin && <th>Password</th>}
           <th>Company</th>
           <th>Actions</th>
         </tr>

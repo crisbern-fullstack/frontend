@@ -1,6 +1,9 @@
 import { CSVLink } from "react-csv";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const CompanyEmployeesTable = ({ company, employees }) => {
+  const { user } = useAuthContext();
+
   const csv_headers = [
     { label: "_id", key: "_id" },
     { label: "first_name", key: "first_name" },
@@ -14,19 +17,21 @@ const CompanyEmployeesTable = ({ company, employees }) => {
   return (
     <table id="example2" className="table table-bordered table-hover">
       <thead>
-        <tr>
-          <th colSpan={5}>
-            <CSVLink
-              className="btn btn-success"
-              headers={csv_headers}
-              data={company.employees ? company.employees : [[]]}
-              separator={";"}
-              filename={`Employees of ${company.name}`}
-            >
-              Export as CSV
-            </CSVLink>
-          </th>
-        </tr>
+        {user.isAdmin && (
+          <tr>
+            <th colSpan={5}>
+              <CSVLink
+                className="btn btn-success"
+                headers={csv_headers}
+                data={company.employees ? company.employees : [[]]}
+                separator={";"}
+                filename={`Employees of ${company.name}`}
+              >
+                Export as CSV
+              </CSVLink>
+            </th>
+          </tr>
+        )}
         <tr>
           <th>ID</th>
           <th>First Name</th>

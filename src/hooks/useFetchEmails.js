@@ -20,7 +20,6 @@ export const useFetchEmails = () => {
     if (response.ok) {
       setIsLoading(false);
       setEmails(emails);
-      console.log(emails);
       return;
     }
 

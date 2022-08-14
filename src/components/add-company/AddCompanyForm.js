@@ -56,6 +56,7 @@ const AddCompanyForm = () => {
           <label htmlFor="company-name">Name</label>
           <input
             type="text"
+            readOnly={!user.isAdmin}
             className="form-control"
             placeholder="Name"
             id="company-name"

@@ -60,6 +60,7 @@ const CompanyDetailsForm = ({ id, user, company, setCompany }) => {
           <label htmlFor="company-name">Name</label>
           <input
             type="text"
+            readOnly={!user.isAdmin}
             className="form-control"
             placeholder="Name"
             id="company-name"
@@ -73,6 +74,7 @@ const CompanyDetailsForm = ({ id, user, company, setCompany }) => {
           <label htmlFor="company-email">Email</label>
           <input
             type="email"
+            readOnly={!user.isAdmin}
             className="form-control"
             id="company-email"
             placeholder="Enter email"
@@ -86,6 +88,7 @@ const CompanyDetailsForm = ({ id, user, company, setCompany }) => {
           <label htmlFor="company-website">Website</label>
           <input
             type="text"
+            readOnly={!user.isAdmin}
             className="form-control"
             placeholder="Website (e.g. http://www.facebook.com)"
             id="company-website"
@@ -99,15 +102,18 @@ const CompanyDetailsForm = ({ id, user, company, setCompany }) => {
           <label htmlFor="company-logo">Logo</label>
           <div className="input-group">
             <div className="custom-file">
-              <input
-                type="file"
-                className="custom-file-input"
-                id="company-logo"
-                accept=".jpg .jpeg .png"
-                onChange={(e) => {
-                  setLogo({ name: e.target.value, file: e.target.files[0] });
-                }}
-              />
+              {user.isAdmin && (
+                <input
+                  type="file"
+                  readOnly={!user.isAdmin}
+                  className="custom-file-input"
+                  id="company-logo"
+                  accept=".jpg .jpeg .png"
+                  onChange={(e) => {
+                    setLogo({ name: e.target.value, file: e.target.files[0] });
+                  }}
+                />
+              )}
               <label className="custom-file-label" htmlFor="company-logo">
                 {logo.name && logo.name.replace("C:\\fakepath\\", "")}
               </label>
@@ -116,33 +122,35 @@ const CompanyDetailsForm = ({ id, user, company, setCompany }) => {
         </div>
       </div>
       {/* /.card-body */}
-      <div className="card-footer">
-        {!isLoading && (
-          <button type="submit" className="btn btn-primary">
-            Save Edits
-          </button>
-        )}
-        {isLoading && (
-          <div>
-            <img
-              src="/loading.gif"
-              style={{ maxWidth: "50px", maxHeight: "50px" }}
-              className="img-responsive"
-            />
-            <h5 style={{ color: "blue" }}>Saving...</h5>
-          </div>
-        )}
-        {isSuccess && (
-          <h5 style={{ color: "green", marginTop: "10px" }}>
-            Changes are successfuly saved!
-          </h5>
-        )}
-        {error && (
-          <div style={{ marginTop: "10px" }} className="alert alert-danger">
-            {error}
-          </div>
-        )}
-      </div>
+      {user.isAdmin && (
+        <div className="card-footer">
+          {!isLoading && (
+            <button type="submit" className="btn btn-primary">
+              Save Edits
+            </button>
+          )}
+          {isLoading && (
+            <div>
+              <img
+                src="/loading.gif"
+                style={{ maxWidth: "50px", maxHeight: "50px" }}
+                className="img-responsive"
+              />
+              <h5 style={{ color: "blue" }}>Saving...</h5>
+            </div>
+          )}
+          {isSuccess && (
+            <h5 style={{ color: "green", marginTop: "10px" }}>
+              Changes are successfuly saved!
+            </h5>
+          )}
+          {error && (
+            <div style={{ marginTop: "10px" }} className="alert alert-danger">
+              {error}
+            </div>
+          )}
+        </div>
+      )}
     </form>
   );
 };

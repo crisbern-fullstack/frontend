@@ -83,15 +83,17 @@ const Employees = () => {
         </section>
         {/* Main content */}
         <section className="content" style={{ marginBottom: "20px" }}>
-          <div className="container-fluid">
-            <div className="row">
-              <div className="col col-5">
-                <Link to="add-employee" className="btn btn-success">
-                  <i className="bi bi-plus-circle-fill"></i>Add New Employee
-                </Link>
+          {user.isAdmin && (
+            <div className="container-fluid">
+              <div className="row">
+                <div className="col col-5">
+                  <Link to="add-employee" className="btn btn-success">
+                    <i className="bi bi-plus-circle-fill"></i>Add New Employee
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </section>
         <section className="content">
           <div className="container-fluid">
