@@ -1,22 +1,25 @@
 import { useEffect } from "react";
-import { useAuthContext } from "../hooks/useAuthContext";
 import useFetchEmails from "../hooks/useFetchEmails";
 import { Markup } from "interweave";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { format } from "date-fns";
 
 const SentMails = () => {
-  const { user } = useAuthContext();
   const { fetchEmails, emails } = useFetchEmails();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchEmails(true);
+  }, []);
 
   const truncate = (str, n) => {
     return str?.length > n ? str.substr(0, n - 1) + "..." : str;
   };
 
-  useEffect(() => {
-    fetchEmails(true);
-  }, []);
+  const formatDate = (email_date) => {
+    return format(new Date(email_date), "MMM. dd, yyyy hh:mm aaaa");
+  };
 
   return (
     <div className="content-wrapper">
@@ -26,14 +29,6 @@ const SentMails = () => {
           <div className="row mb-2">
             <div className="col-sm-6">
               <h1>Sent Mails</h1>
-            </div>
-            <div className="col-sm-6">
-              <ol className="breadcrumb float-sm-right">
-                <li className="breadcrumb-item">
-                  <a href="#">Home</a>
-                </li>
-                <li className="breadcrumb-item active">Sent Email</li>
-              </ol>
             </div>
           </div>
         </div>
@@ -54,62 +49,10 @@ const SentMails = () => {
           <div className="col-md-9">
             <div className="card card-primary card-outline">
               <div className="card-header">
-                <h3 className="card-title">Inbox</h3>
-                <div className="card-tools">
-                  <div className="input-group input-group-sm">
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Search Mail"
-                    />
-                    <div className="input-group-append">
-                      <div className="btn btn-primary">
-                        <i className="fas fa-search" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {/* /.card-tools */}
+                <h3 className="card-title">Mails</h3>
               </div>
               {/* /.card-header */}
               <div className="card-body p-0">
-                <div className="mailbox-controls">
-                  {/* Check all button */}
-                  <button
-                    type="button"
-                    className="btn btn-default btn-sm checkbox-toggle"
-                  >
-                    <i className="far fa-square" />
-                  </button>
-                  <div className="btn-group">
-                    <button type="button" className="btn btn-default btn-sm">
-                      <i className="far fa-trash-alt" />
-                    </button>
-                    <button type="button" className="btn btn-default btn-sm">
-                      <i className="fas fa-reply" />
-                    </button>
-                    <button type="button" className="btn btn-default btn-sm">
-                      <i className="fas fa-share" />
-                    </button>
-                  </div>
-                  {/* /.btn-group */}
-                  <button type="button" className="btn btn-default btn-sm">
-                    <i className="fas fa-sync-alt" />
-                  </button>
-                  <div className="float-right">
-                    1-50/200
-                    <div className="btn-group">
-                      <button type="button" className="btn btn-default btn-sm">
-                        <i className="fas fa-chevron-left" />
-                      </button>
-                      <button type="button" className="btn btn-default btn-sm">
-                        <i className="fas fa-chevron-right" />
-                      </button>
-                    </div>
-                    {/* /.btn-group */}
-                  </div>
-                  {/* /.float-right */}
-                </div>
                 <div className="table-responsive mailbox-messages">
                   <table className="table table-hover table-striped">
                     <tbody>
@@ -126,7 +69,9 @@ const SentMails = () => {
                               <Markup content={truncate(email.html, 100)} />
                             </td>
                             <td className="mailbox-attachment" />
-                            <td className="mailbox-date">{email.date}</td>
+                            <td className="mailbox-date">
+                              {formatDate(email.date)}
+                            </td>
                           </tr>
                         ))}
                     </tbody>
@@ -136,23 +81,7 @@ const SentMails = () => {
                 {/* /.mail-box-messages */}
               </div>
               {/* /.card-body */}
-              <div className="card-footer p-0">
-                <div className="mailbox-controls">
-                  <div className="float-right">
-                    1-50/200
-                    <div className="btn-group">
-                      <button type="button" className="btn btn-default btn-sm">
-                        <i className="fas fa-chevron-left" />
-                      </button>
-                      <button type="button" className="btn btn-default btn-sm">
-                        <i className="fas fa-chevron-right" />
-                      </button>
-                    </div>
-                    {/* /.btn-group */}
-                  </div>
-                  {/* /.float-right */}
-                </div>
-              </div>
+              <div className="card-footer p-0"></div>
             </div>
             {/* /.card */}
           </div>

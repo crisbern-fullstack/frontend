@@ -42,32 +42,32 @@ const Sidebar = () => {
             {/* Companies */}
             <li className="nav-item">
               <Link to="companies" className="nav-link">
-                <i className="nav-icon fas fa-tachometer-alt" />
+                <i class="nav-icon fa-solid fa-building"></i>
                 <p>Companies</p>
               </Link>
             </li>
             <li className="nav-item">
               <Link to="employees" className="nav-link">
-                <i className="nav-icon fas fa-tachometer-alt" />
+                <i class="nav-icon fa-solid fa-person-walking-luggage"></i>
                 <p>Employees</p>
               </Link>
             </li>
             <li class="nav-header">Mail</li>
             <li className="nav-item">
               <Link to="mail" className="nav-link">
-                <i className="nav-icon fas fa-tachometer-alt" />
+                <i class="nav-icon fa-solid fa-envelope"></i>
                 <p>Compose Mail</p>
               </Link>
             </li>
             <li className="nav-item">
               <Link to="mail/sent" className="nav-link">
-                <i className="nav-icon fas fa-tachometer-alt" />
+                <i class="nav-icon fa-solid fa-envelope-open"></i>
                 <p>Sent Mails</p>
               </Link>
             </li>
             <li className="nav-item">
               <Link to="mail/scheduled" className="nav-link">
-                <i className="nav-icon fas fa-tachometer-alt" />
+                <i class="nav-icon fa-solid fa-clock"></i>
                 <p>Scheduled Mails</p>
               </Link>
             </li>

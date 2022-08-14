@@ -110,15 +110,12 @@ const ComposeMailForm = () => {
       {/* /.card-body */}
       <div className="card-footer">
         <div className="float-right">
-          <button type="button" className="btn btn-default">
-            <i className="fas fa-pencil-alt" /> Draft
-          </button>
           <button
             onClick={handleSend}
             type="submit"
             className="btn btn-primary"
           >
-            <i className="far fa-envelope" /> Send
+            <i className="far fa-envelope" /> Send Now
           </button>
         </div>
       </div>
@@ -131,6 +128,7 @@ const ComposeMailForm = () => {
           />
           <button
             onClick={handleSendLater}
+            style={{ marginLeft: "10px" }}
             type="submit"
             className="btn btn-success"
           >

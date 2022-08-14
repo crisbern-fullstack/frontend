@@ -59,7 +59,7 @@ const ReadMails = () => {
         <div className="container-fluid">
           <div className="row mb-2">
             <div className="col-sm-6">
-              <h1>Compose</h1>
+              <h1>Read Mail</h1>
             </div>
             <div className="col-sm-6">
               <ol className="breadcrumb float-sm-right">
@@ -78,9 +78,22 @@ const ReadMails = () => {
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-3">
-              <Link to="/mail/sent" className="btn btn-primary btn-block mb-3">
-                Back to Sent Mails
-              </Link>
+              {email.sent && (
+                <Link
+                  to="/mail/sent"
+                  className="btn btn-primary btn-block mb-3"
+                >
+                  Back to Sent Mails
+                </Link>
+              )}
+              {!email.sent && (
+                <Link
+                  to="/mail/scheduled"
+                  className="btn btn-primary btn-block mb-3"
+                >
+                  Back to Scheduled Mails
+                </Link>
+              )}
             </div>
             {/* /.col */}
             <div className="col-md-9">
