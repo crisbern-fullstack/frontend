@@ -96,6 +96,12 @@ const Sidebar = () => {
                 <p>Sent Mails</p>
               </Link>
             </li>
+            <li className="nav-item">
+              <Link to="mail/scheduled" className="nav-link">
+                <i className="nav-icon fas fa-tachometer-alt" />
+                <p>Scheduled Mails</p>
+              </Link>
+            </li>
           </ul>
         </nav>
         {/* /.sidebar-menu */}

@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useState } from "react";
 import { Markup } from "interweave";
+import { Link, useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 
 const ReadMails = () => {
@@ -10,6 +11,7 @@ const ReadMails = () => {
   const { user } = useAuthContext();
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsLoading(true);
@@ -32,6 +34,24 @@ const ReadMails = () => {
 
     fetchEmail();
   }, []);
+
+  const handleDelete = async (_id) => {
+    const response = await fetch(`/delete-email/${_id}`, {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${user.token}` },
+    });
+
+    const email_company = await response.json();
+    const sent = email_company.sent;
+
+    if (response.ok) {
+      if (sent) {
+        navigate("/mail/sent");
+      } else {
+        navigate("/mail/scheduled");
+      }
+    }
+  };
 
   return (
     <div className="content-wrapper">
@@ -58,9 +78,9 @@ const ReadMails = () => {
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-3">
-              <a href="mailbox.html" className="btn btn-primary btn-block mb-3">
-                Back to Inbox
-              </a>
+              <Link to="/mail/sent" className="btn btn-primary btn-block mb-3">
+                Back to Sent Mails
+              </Link>
             </div>
             {/* /.col */}
             <div className="col-md-9">
@@ -74,10 +94,7 @@ const ReadMails = () => {
                     <h5>{email.subject}</h5>
                     <h6>
                       To: {email.receivers}
-                      <span className="mailbox-read-time float-right">
-                        {email &&
-                          format(new Date(email.createdAt), "dd.MM.yyyy")}
-                      </span>
+                      <span className="mailbox-read-time float-right"></span>
                     </h6>
                   </div>
                   {/* /.mailbox-read-info */}
@@ -90,9 +107,28 @@ const ReadMails = () => {
                 <div className="card-footer bg-white"></div>
                 {/* /.card-footer */}
                 <div className="card-footer">
-                  <button type="button" className="btn btn-default">
-                    <i className="far fa-trash-alt" /> Delete
-                  </button>
+                  {email.sent && (
+                    <button
+                      onClick={(e) => {
+                        handleDelete(email._id);
+                      }}
+                      type="button"
+                      className="btn btn-default"
+                    >
+                      <i className="far fa-trash-alt" /> Delete
+                    </button>
+                  )}
+                  {!email.sent && (
+                    <button
+                      onClick={(e) => {
+                        handleDelete(email._id);
+                      }}
+                      type="button"
+                      className="btn btn-default"
+                    >
+                      <i className="far fa-trash-alt" /> Delete and Cancel Email
+                    </button>
+                  )}
                 </div>
                 {/* /.card-footer */}
               </div>

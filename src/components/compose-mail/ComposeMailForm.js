@@ -66,10 +66,7 @@ const ComposeMailForm = () => {
     console.log(email);
 
     if (response.ok) {
-      setSender("");
-      setReceivers("");
-      setSubject("");
-      setMessage("");
+      navigate("/mail/scheduled");
     }
   };
 

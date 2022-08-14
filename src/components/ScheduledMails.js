@@ -5,7 +5,7 @@ import { Markup } from "interweave";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-const SentMails = () => {
+const ScheduledMails = () => {
   const { user } = useAuthContext();
   const { fetchEmails, emails } = useFetchEmails();
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ const SentMails = () => {
   };
 
   useEffect(() => {
-    fetchEmails(true);
+    fetchEmails(false);
   }, []);
 
   return (
@@ -25,7 +25,7 @@ const SentMails = () => {
         <div className="container-fluid">
           <div className="row mb-2">
             <div className="col-sm-6">
-              <h1>Sent Mails</h1>
+              <h1>Scheduled Mails</h1>
             </div>
             <div className="col-sm-6">
               <ol className="breadcrumb float-sm-right">
@@ -165,4 +165,4 @@ const SentMails = () => {
   );
 };
 
-export default SentMails;
+export default ScheduledMails;
