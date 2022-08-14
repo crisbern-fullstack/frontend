@@ -26,6 +26,7 @@ const Employees = () => {
       dispatch({ type: "DELETE_EMPLOYEES", payload: deleted_employee });
     }
   };
+
   useState(() => {
     fetchEmployees();
   }, [employees]);
