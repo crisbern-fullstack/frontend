@@ -12,7 +12,7 @@ export const useLogin = () => {
   const login = async (email, password) => {
     setIsLoading(true);
 
-    const response = await fetch("/login", {
+    const response = await fetch("https://crisbern-exam.herokuapp.com/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
