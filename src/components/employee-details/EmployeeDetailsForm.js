@@ -174,8 +174,8 @@ const EmployeeDetailsForm = () => {
             }}
           >
             <option value={""}>Select Company</option>
-            {companies.companies &&
-              companies.companies.map((company) => (
+            {companies &&
+              companies.map((company) => (
                 <option value={company._id}>{company.name}</option>
               ))}
           </select>
