@@ -125,6 +125,7 @@ const AddEmployeeForm = () => {
             value={company}
             onChange={(e) => {
               setCompany(e.target.value);
+              console.log(company);
             }}
           >
             <option value={""}>Select Company</option>

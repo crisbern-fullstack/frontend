@@ -9,17 +9,26 @@ export const useFetchCompanies = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchCompanies = async () => {
+  const fetchCompanies = async (
+    field = "name",
+    order = "1",
+    limit = "0",
+    skip = "0"
+  ) => {
     setIsLoading(true);
 
-    const response = await fetch("/api/all-companies", {
-      headers: { Authorization: `Bearer ${user.token}` },
-    });
+    const response = await fetch(
+      `/api/all-companies?field=${field}&order=${order}&limit=${limit}&skip=${skip}`,
+      {
+        headers: { Authorization: `Bearer ${user.token}` },
+      }
+    );
 
     const companies = await response.json();
 
     if (response.ok) {
       setIsLoading(false);
+      console.log(companies);
       dispatch({ type: "SET_COMPANIES", payload: companies });
       return;
     }

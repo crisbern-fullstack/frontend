@@ -13,6 +13,15 @@ const Companies = () => {
   const { user } = useAuthContext();
   const { dispatch } = useCompaniesContext();
 
+  //data filtering
+  const [sortField, setSortField] = useState("name");
+  const [order, setOrder] = useState("1");
+  const [limit, setLimit] = useState("5");
+  const [skip, setSkip] = useState(0);
+  const [companiesCount, setCompaniesCount] = useState(1);
+  const [pages, setPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+
   const handleDelete = async (_id) => {
     const response = await fetch(`/api/delete-company/${_id}`, {
       method: "DELETE",
@@ -28,9 +37,38 @@ const Companies = () => {
   };
 
   useEffect(() => {
-    console.log(user);
-    fetchCompanies();
-  }, []);
+    //gets number of companies and will be used on pagination
+    const fetchCompanyCounts = async () => {
+      const response = await fetch("/api/companies-count", {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
+
+      const fetched_companies_count = await response.json();
+
+      if (response.ok) {
+        setCompaniesCount(fetchCompanyCounts.companies_ount);
+        return;
+      }
+
+      if (!response.ok) {
+      }
+    };
+
+    fetchCompanyCounts();
+    fetchCompanies(sortField, order, limit, skip);
+  }, [sortField, order, limit, skip, currentPage]);
+
+  const handleNext = () => {
+    setCurrentPage(currentPage + 1);
+    setSkip(currentPage * limit);
+    fetchCompanies(sortField, order, limit, skip);
+  };
+
+  const handlePrevious = () => {
+    setCurrentPage(currentPage - 1);
+    setSkip(currentPage * limit);
+    fetchCompanies(sortField, order, limit, skip);
+  };
 
   return (
     <div>
@@ -105,6 +143,50 @@ const Companies = () => {
                   </div>
                   {/* /.card-header */}
                   <div className="card-body ">
+                    <div className="d-flex">
+                      <div className="form-group">
+                        <label>Sort By:</label>
+                        <select
+                          value={sortField}
+                          onChange={(e) => {
+                            setSortField(e.target.value);
+                          }}
+                          className="form-control select2"
+                        >
+                          <option value={"name"}>Name</option>
+                          <option value={"email"}>Email</option>
+                          <option value={"createdAt"}>Date Added</option>
+                        </select>
+                      </div>
+                      <div className="form-group">
+                        <label>Order:</label>
+                        <select
+                          value={order}
+                          onChange={(e) => {
+                            setOrder(e.target.value);
+                          }}
+                          className="form-control select2"
+                        >
+                          <option value={"1"}>Ascending</option>
+                          <option value={"-1"}>Descending</option>
+                        </select>
+                      </div>
+                      {/* <div className="form-group">
+                        <label>Limit:</label>
+                        <select
+                          value={limit}
+                          onChange={(e) => {
+                            setLimit(e.target.value);
+                          }}
+                          className="form-control select2"
+                        >
+                          <option value={"5"}>5</option>
+                          <option value={"10"}>10</option>
+                          <option value={"15"}>15</option>
+                          <option value={"20"}>20</option>
+                        </select>
+                      </div> */}
+                    </div>
                     <div className="table-responsive">
                       <CompanyTable
                         setShowOverLay={setShowOverLay}
@@ -112,6 +194,16 @@ const Companies = () => {
                         setId={setId}
                       />
                     </div>
+
+                    {/* <div className="card-footer">
+                      <button onClick={handlePrevious} className="btn btn-info">
+                        Previous
+                      </button>
+                      {currentPage}
+                      <button onClick={handleNext} className="btn btn-info">
+                        Next
+                      </button>
+                    </div> */}
                   </div>
                   {/* /.card-body */}
                 </div>
