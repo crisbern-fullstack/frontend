@@ -10,7 +10,7 @@ const EmployeeDetails = () => {
   const { fetchEmployee, error, isLoading } = useFetchEmployee();
 
   useEffect(() => {
-    fetchCompany("62f77647cb1927e9ecb70ed7");
+    fetchCompany();
     fetchEmployee(id);
   }, []);
   return (

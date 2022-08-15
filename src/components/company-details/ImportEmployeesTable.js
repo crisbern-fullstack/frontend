@@ -55,7 +55,7 @@ const ImportEmployeesTable = ({ company_id, employees, setEmployees }) => {
       }
 
       const response = await fetch(
-        process.env.REACT_APP_BACKEND + "/api/update-employee/" + employee._id,
+        process.env.REACT_APP_BACKEND + "api/update-employee/" + employee._id,
         {
           method: "PATCH",
           body: JSON.stringify(data),
