@@ -28,7 +28,7 @@ const CompanyTable = ({ setShowOverLay, setCompany, setId }) => {
               <td>{company.website}</td>
               <td className="d-flex align-items-center justify-content-center">
                 <img
-                  src={company.logo}
+                  src={process.env.REACT_APP_BACKEND + company.logo}
                   style={{
                     maxWidth: "100px",
                     maxHeight: "100px",

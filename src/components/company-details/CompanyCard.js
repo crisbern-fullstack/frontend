@@ -20,7 +20,7 @@ const CompanyCard = ({ isLoading, props_company }) => {
         {!isLoading && (
           <img
             className="img-fluid"
-            src={`/${props_company.logo}`}
+            src={`${process.env.REACT_APP_BACKEND}/${props_company.logo}`}
             alt={`${props_company.name} Logo`}
           />
         )}
