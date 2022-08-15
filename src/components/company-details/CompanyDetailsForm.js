@@ -111,7 +111,7 @@ const CompanyDetailsForm = ({ id, user, company, setCompany }) => {
                   readOnly={!user.isAdmin}
                   className="custom-file-input"
                   id="company-logo"
-                  accept=".jpg .jpeg .png"
+                  accept="*.jpg *.jpeg *.png"
                   onChange={(e) => {
                     setLogo({ name: e.target.value, file: e.target.files[0] });
                   }}
