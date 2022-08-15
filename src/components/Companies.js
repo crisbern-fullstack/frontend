@@ -23,10 +23,13 @@ const Companies = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const handleDelete = async (_id) => {
-    const response = await fetch(`/api/delete-company/${_id}`, {
-      method: "DELETE",
-      headers: { Authorization: `Bearer ${user.token}` },
-    });
+    const response = await fetch(
+      process.env.REACT_APP_BACKEND + `api/delete-company/${_id}`,
+      {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${user.token}` },
+      }
+    );
 
     const deleted_company = await response.json();
 
@@ -39,9 +42,12 @@ const Companies = () => {
   useEffect(() => {
     //gets number of companies and will be used on pagination
     const fetchCompanyCounts = async () => {
-      const response = await fetch("/api/companies-count", {
-        headers: { Authorization: `Bearer ${user.token}` },
-      });
+      const response = await fetch(
+        process.env.REACT_APP_BACKEND + "api/companies-count",
+        {
+          headers: { Authorization: `Bearer ${user.token}` },
+        }
+      );
 
       const fetched_companies_count = await response.json();
 

@@ -12,9 +12,12 @@ export const useFetchEmployee = () => {
   const fetchEmployee = async (id) => {
     setIsLoading(true);
 
-    const response = await fetch("/api/employee/" + id, {
-      headers: { Authorization: `Bearer ${user.token}` },
-    });
+    const response = await fetch(
+      process.env.REACT_APP_BACKEND + "api/employee/" + id,
+      {
+        headers: { Authorization: `Bearer ${user.token}` },
+      }
+    );
 
     const employee = await response.json();
 

@@ -18,7 +18,8 @@ export const useFetchCompanies = () => {
     setIsLoading(true);
 
     const response = await fetch(
-      `/api/all-companies?field=${field}&order=${order}&limit=${limit}&skip=${skip}`,
+      process.env.REACT_APP_BACKEND +
+        `api/all-companies?field=${field}&order=${order}&limit=${limit}&skip=${skip}`,
       {
         headers: { Authorization: `Bearer ${user.token}` },
       }
@@ -28,7 +29,6 @@ export const useFetchCompanies = () => {
 
     if (response.ok) {
       setIsLoading(false);
-      console.log(companies);
       dispatch({ type: "SET_COMPANIES", payload: companies });
       return;
     }

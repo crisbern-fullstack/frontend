@@ -29,7 +29,7 @@ const ComposeMailForm = () => {
       sent: true,
     };
 
-    const response = await fetch("/send-email", {
+    const response = await fetch(process.env.REACT_APP_BACKEND + "send-email", {
       method: "POST",
       body: JSON.stringify(email_args),
       headers: {
@@ -62,14 +62,17 @@ const ComposeMailForm = () => {
       sent: false,
     };
 
-    const response = await fetch("/send-scheduled-email", {
-      method: "POST",
-      body: JSON.stringify(email_args),
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      process.env.REACT_APP_BACKEND + "send-scheduled-email",
+      {
+        method: "POST",
+        body: JSON.stringify(email_args),
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     const email = await response.json();
 

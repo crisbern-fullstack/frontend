@@ -12,15 +12,13 @@ export const useLogin = () => {
   const login = async (email, password) => {
     setIsLoading(true);
 
-    const response = await fetch("https://crisbern-exam.herokuapp.com/login", {
+    const response = await fetch(process.env.REACT_APP_BACKEND + "login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
 
     const json = await response.json();
-
-    console.log(json);
 
     if (response.ok) {
       setIsLoading(false);

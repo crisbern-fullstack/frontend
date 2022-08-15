@@ -24,9 +24,12 @@ const ReadMails = () => {
   useEffect(() => {
     setIsLoading(true);
     const fetchEmail = async () => {
-      const response = await fetch("/emails/" + id, {
-        headers: { Authorization: `Bearer ${user.token}` },
-      });
+      const response = await fetch(
+        process.env.REACT_APP_BACKEND + "emails/" + id,
+        {
+          headers: { Authorization: `Bearer ${user.token}` },
+        }
+      );
 
       const fetched_email = await response.json();
 
@@ -44,10 +47,13 @@ const ReadMails = () => {
   }, []);
 
   const handleDelete = async (_id) => {
-    const response = await fetch(`/delete-email/${_id}`, {
-      method: "DELETE",
-      headers: { Authorization: `Bearer ${user.token}` },
-    });
+    const response = await fetch(
+      process.env.REACT_APP_BACKEND + `/delete-email/${_id}`,
+      {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${user.token}` },
+      }
+    );
 
     const email_company = await response.json();
     const sent = email_company.sent;

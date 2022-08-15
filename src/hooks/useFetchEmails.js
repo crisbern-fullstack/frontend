@@ -11,9 +11,12 @@ export const useFetchEmails = () => {
   const fetchEmails = async (sent) => {
     setIsLoading(true);
 
-    const response = await fetch(`/emails?sent=${sent}`, {
-      headers: { Authorization: `Bearer ${user.token}` },
-    });
+    const response = await fetch(
+      process.env.REACT_APP_BACKEND + `emails?sent=${sent}`,
+      {
+        headers: { Authorization: `Bearer ${user.token}` },
+      }
+    );
 
     const emails = await response.json();
 

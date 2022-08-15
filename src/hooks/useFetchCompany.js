@@ -12,9 +12,12 @@ export const useFetchCompany = () => {
   const fetchCompany = async (id) => {
     setIsLoading(true);
 
-    const response = await fetch("/api/company/" + id, {
-      headers: { Authorization: `Bearer ${user.token}` },
-    });
+    const response = await fetch(
+      process.env.REACT_APP_BACKEND + "api/company/" + id,
+      {
+        headers: { Authorization: `Bearer ${user.token}` },
+      }
+    );
 
     const company = await response.json();
 

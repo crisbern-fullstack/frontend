@@ -24,11 +24,14 @@ const CompanyDetailsForm = ({ id, user, company, setCompany }) => {
     formData.append("website", website);
     formData.append("company-logo", logo.file);
 
-    const response = await fetch("/api/update-company/" + id, {
-      method: "PATCH",
-      body: formData,
-      headers: { Authorization: `Bearer ${user.token}` },
-    });
+    const response = await fetch(
+      process.env.REACT_APP_BACKEND + "api/update-company/" + id,
+      {
+        method: "PATCH",
+        body: formData,
+        headers: { Authorization: `Bearer ${user.token}` },
+      }
+    );
 
     const updated_company = await response.json();
 

@@ -12,9 +12,12 @@ export const useFetchEmployees = () => {
   const fetchEmployees = async () => {
     setIsLoading(true);
 
-    const response = await fetch("/api/all-employees", {
-      headers: { Authorization: `Bearer ${user.token}` },
-    });
+    const response = await fetch(
+      process.env.REACT_APP_BACKEND + "api/all-employees",
+      {
+        headers: { Authorization: `Bearer ${user.token}` },
+      }
+    );
 
     const employees = await response.json();
 

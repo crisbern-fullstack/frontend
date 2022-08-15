@@ -76,14 +76,17 @@ const EmployeeDetailsForm = () => {
       data.current_password = currentPassword;
     }
 
-    const response = await fetch("/api/update-employee/" + id, {
-      method: "PATCH",
-      body: JSON.stringify(data),
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      process.env.REACT_APP_BACKEND + "api/update-employee/" + id,
+      {
+        method: "PATCH",
+        body: JSON.stringify(data),
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     const new_employee = await response.json();
 

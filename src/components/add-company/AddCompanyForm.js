@@ -29,11 +29,14 @@ const AddCompanyForm = () => {
     formData.append("website", website);
     formData.append("company-logo", logo.file);
 
-    const response = await fetch("/api/new-company", {
-      method: "POST",
-      body: formData,
-      headers: { Authorization: `Bearer ${user.token}` },
-    });
+    const response = await fetch(
+      process.env.REACT_APP_BACKEND + "api/new-company",
+      {
+        method: "POST",
+        body: formData,
+        headers: { Authorization: `Bearer ${user.token}` },
+      }
+    );
 
     const new_company = await response.json();
 

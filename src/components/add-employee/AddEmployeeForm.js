@@ -44,7 +44,7 @@ const AddEmployeeForm = () => {
       is_admin: isAdmin,
     };
 
-    const response = await fetch("/signup", {
+    const response = await fetch(process.env.REACT_APP_BACKEND + "signup", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {

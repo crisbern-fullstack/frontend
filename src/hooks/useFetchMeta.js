@@ -11,7 +11,7 @@ export const useFetchMeta = () => {
   const fetchMeta = async () => {
     setIsLoading(true);
 
-    const response = await fetch("/api/meta", {
+    const response = await fetch(process.env.REACT_APP_BACKEND + "api/meta", {
       headers: { Authorization: `Bearer ${user.token}` },
     });
 

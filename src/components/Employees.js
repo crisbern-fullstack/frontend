@@ -14,10 +14,13 @@ const Employees = () => {
   const { user } = useAuthContext();
 
   const handleDelete = async (_id) => {
-    const response = await fetch(`/api/delete-employee/${_id}`, {
-      method: "DELETE",
-      headers: { Authorization: `Bearer ${user.token}` },
-    });
+    const response = await fetch(
+      process.env.REACT_APP_BACKEND + `api/delete-employee/${_id}`,
+      {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${user.token}` },
+      }
+    );
 
     const deleted_employee = await response.json();
 
