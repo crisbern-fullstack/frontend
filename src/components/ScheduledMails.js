@@ -3,6 +3,7 @@ import useFetchEmails from "../hooks/useFetchEmails";
 import { Markup } from "interweave";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { format } from "date-fns";
 
 const ScheduledMails = () => {
   const { fetchEmails, emails } = useFetchEmails();
@@ -10,6 +11,10 @@ const ScheduledMails = () => {
 
   const truncate = (str, n) => {
     return str?.length > n ? str.substr(0, n - 1) + "..." : str;
+  };
+
+  const formatDate = (email_date) => {
+    return format(new Date(email_date), "MMM. dd, yyyy hh:mm aaaa");
   };
 
   useEffect(() => {
@@ -65,7 +70,9 @@ const ScheduledMails = () => {
                               <Markup content={truncate(email.html, 100)} />
                             </td>
                             <td className="mailbox-attachment" />
-                            <td className="mailbox-date">{email.date}</td>
+                            <td className="mailbox-date">
+                              {formatDate(email.date)}
+                            </td>
                           </tr>
                         ))}
                     </tbody>

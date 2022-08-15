@@ -13,6 +13,14 @@ const ReadMails = () => {
   const [email, setEmail] = useState({});
   const navigate = useNavigate();
 
+  const formatDate = (email_date) => {
+    try {
+      return format(new Date(email_date), "MMM. dd, yyyy hh:mm aaaa");
+    } catch (error) {
+      return "";
+    }
+  };
+
   useEffect(() => {
     setIsLoading(true);
     const fetchEmail = async () => {
@@ -107,7 +115,10 @@ const ReadMails = () => {
                     <h5>{email.subject}</h5>
                     <h6>
                       To: {email.receivers}
-                      <span className="mailbox-read-time float-right"></span>
+                      <span className="mailbox-read-time float-right">
+                        {!email.sent && "Scheduled to be sent: "}
+                        {formatDate(email.date)}
+                      </span>
                     </h6>
                   </div>
                   {/* /.mailbox-read-info */}

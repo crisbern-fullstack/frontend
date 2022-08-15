@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Main from "./components/Main";
-import Home from "./components/Home";
+import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
 import Companies from "./components/Companies";
 import AddCompany from "./components/AddCompany";
@@ -22,7 +22,10 @@ function App() {
       <Routes>
         <Route path="login" element={!user ? <Login /> : <Navigate to="/" />} />
         <Route path="/" element={user ? <Main /> : <Navigate to="/login" />}>
-          <Route path="" element={user ? <Home /> : <Navigate to="/login" />} />
+          <Route
+            path=""
+            element={user ? <Dashboard /> : <Navigate to="/login" />}
+          />
           <Route
             path="companies"
             element={user ? <Companies /> : <Navigate to="/login" />}

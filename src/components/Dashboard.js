@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import useFetchMeta from "../hooks/useFetchMeta";
 
-const Home = () => {
+const Dashboard = () => {
   const { fetchMeta, metaData } = useFetchMeta();
 
   useEffect(() => {
@@ -70,4 +70,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Dashboard;
