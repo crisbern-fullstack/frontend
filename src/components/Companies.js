@@ -16,10 +16,8 @@ const Companies = () => {
   //data filtering
   const [sortField, setSortField] = useState("name");
   const [order, setOrder] = useState("1");
-  const [limit, setLimit] = useState("5");
+  const [limit, setLimit] = useState("0");
   const [skip, setSkip] = useState(0);
-  const [companiesCount, setCompaniesCount] = useState(1);
-  const [pages, setPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
 
   const handleDelete = async (_id) => {
@@ -52,7 +50,6 @@ const Companies = () => {
       const fetched_companies_count = await response.json();
 
       if (response.ok) {
-        setCompaniesCount(fetchCompanyCounts.companies_ount);
         return;
       }
 
