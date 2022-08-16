@@ -48,7 +48,7 @@ const ReadMails = () => {
 
   const handleDelete = async (_id) => {
     const response = await fetch(
-      process.env.REACT_APP_BACKEND + `/delete-email/${_id}`,
+      process.env.REACT_APP_BACKEND + `delete-email/${_id}`,
       {
         method: "DELETE",
         headers: { Authorization: `Bearer ${user.token}` },
